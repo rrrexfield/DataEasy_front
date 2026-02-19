@@ -1,0 +1,54 @@
+// SCSS 变量定义
+// 主题色
+$primary-color: #409eff;
+$success-color: #67c23a;
+$warning-color: #e6a23c;
+$danger-color: #f56c6c;
+$info-color: #909399;
+
+// 土壤质量等级颜色
+$soil-excellent: #67c23a;
+$soil-good: #95d475;
+$soil-medium: #e6a23c;
+$soil-poor: #f78989;
+$soil-degraded: #f56c6c;
+
+// 布局相关
+$navbar-height: 60px;
+$sidebar-width: 200px;
+$sidebar-collapsed-width: 64px;
+
+// 地图背景色
+$map-bg-dark: #1a1a1a;
+$map-bg-light: #f0f2f5;
+
+// 文字颜色
+$text-primary: #303133;
+$text-regular: #606266;
+$text-secondary: #909399;
+$text-placeholder: #c0c4cc;
+
+// 边框颜色
+$border-base: #dcdfe6;
+$border-light: #e4e7ed;
+$border-lighter: #ebeef5;
+$border-extra-light: #f2f6fc;
+
+// 背景色
+$bg-color: #ffffff;
+$bg-color-page: #f2f3f5;
+$bg-color-overlay: #ffffff;
+
+// 阴影
+$box-shadow-base: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+$box-shadow-dark: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
+$box-shadow-light: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+
+// 圆角
+$border-radius-base: 4px;
+$border-radius-small: 2px;
+$border-radius-large: 8px;
+
+// 过渡动画
+$transition-base: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+$transition-fade: opacity 0.3s cubic-bezier(0.23, 1, 0.32, 1);
