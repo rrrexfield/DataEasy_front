@@ -1,0 +1,224 @@
+// Light 风格混合器库
+// 提供霓虹按钮、发光卡片、脉冲动画等可复用的样式混合器
+
+// ========== 多层光晕效果 ==========
+// 模拟真实光源的核心高亮区和边缘衰减区
+@mixin multi-glow($color, $size: md) {
+  $glow-sizes: (
+    sm: (3px, 6px, 15px),
+    md: (5px, 10px, 20px),
+    lg: (8px, 15px, 30px),
+    xl: (10px, 20px, 40px)
+  );
+  
+  $sizes: map-get($glow-sizes, $size);
+  $inner: nth($sizes, 1);
+  $middle: nth($sizes, 2);
+  $outer: nth($sizes, 3);
+  
+  box-shadow:
+    0 0 $inner $color,           // 清晰的轮廓光
+    0 0 $middle $color,          // 柔和辉光
+    0 0 $outer rgba($color, 0.4); // 环境散射光
+}
+
+// ========== 霓虹按钮 ==========
+// 按钮默认状态：边框发光 + 透明背景
+@mixin neon-button($color: $neon-cyan, $size: md) {
+  background-color: transparent;
+  border: 2px solid $color;
+  color: $color;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  @include multi-glow($color, $size);
+  
+  // 文字发光
+  text-shadow:
+    0 0 5px rgba($color, 0.8),
+    0 0 10px rgba($color, 0.5);
+  
+  // Hover 状态：充能效果
+  &:hover {
+    background-color: rgba($color, 0.1);
+    border-color: lighten($color, 10%);
+    color: lighten($color, 15%);
+    transform: translateY(-2px);
+    
+    @include multi-glow(lighten($color, 10%), lg);
+    
+    text-shadow:
+      0 0 8px rgba($color, 1),
+      0 0 15px rgba($color, 0.8),
+      0 0 25px rgba($color, 0.6);
+  }
+  
+  // Active 状态：脉冲效果
+  &:active {
+    transform: translateY(0);
+    @include multi-glow($color, sm);
+  }
+  
+  // Disabled 状态
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    box-shadow: none;
+    text-shadow: none;
+  }
+}
+
+// ========== 发光卡片 ==========
+// 卡片容器：暗色背景 + 微弱边框光 + 内阴影
+@mixin glow-card($bg: rgba(26, 26, 26, 0.8), $border-color: rgba(255, 255, 255, 0.1)) {
+  background: $bg;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1); // 顶部高光模拟受光面
+  
+  transition: all 0.3s ease;
+  
+  // Hover 状态：边缘光晕增强
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow:
+      0 8px 30px rgba(0, 0, 0, 0.6),
+      0 0 20px rgba(255, 255, 255, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+  }
+}
+
+// ========== 磨砂玻璃透光 ==========
+// 结合 backdrop-filter 和半透明背景
+@mixin frosted-glass($blur: 10px, $opacity: 0.05) {
+  background: rgba(255, 255, 255, $opacity);
+  backdrop-filter: blur($blur);
+  border-top: 1px solid rgba(255, 255, 255, 0.2); // 顶部高光边框
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+// ========== 聚光灯效果 ==========
+// 鼠标跟随的径向渐变光源
+@mixin spotlight-effect($radius: 600px, $intensity: 0.1) {
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      $radius circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(255, 255, 255, $intensity),
+      transparent 40%
+    );
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  &:hover::before {
+    opacity: 1;
+  }
+}
+
+// ========== 文字发光 ==========
+@mixin text-glow($color: $neon-cyan, $intensity: medium) {
+  @if $intensity == low {
+    text-shadow: 0 0 5px rgba($color, 0.5);
+  } @else if $intensity == medium {
+    text-shadow:
+      0 0 5px rgba($color, 0.8),
+      0 0 10px rgba($color, 0.5);
+  } @else if $intensity == high {
+    text-shadow:
+      0 0 5px $color,
+      0 0 10px $color,
+      0 0 20px rgba($color, 0.8),
+      0 0 40px rgba($color, 0.5);
+  }
+}
+
+// ========== 边框流光 ==========
+// 边框上的光线流动效果（通过伪元素实现）
+@mixin border-flow($color: $neon-cyan, $duration: 3s) {
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0%,
+      $color 50%,
+      transparent 100%
+    );
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    padding: 2px;
+    animation: border-rotate $duration linear infinite;
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  &:hover::after {
+    opacity: 1;
+  }
+}
+
+// ========== 脉冲波纹 ==========
+// 点击时向外扩散的波纹效果
+@mixin pulse-ripple($color: $neon-cyan) {
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba($color, 0.6), transparent);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+  }
+  
+  &:active::before {
+    width: 300%;
+    height: 300%;
+    opacity: 1;
+    animation: ripple-out 0.6s ease-out;
+  }
+}
+
+// ========== 发光分割线 ==========
+@mixin glow-divider($color: $neon-cyan, $height: 1px) {
+  height: $height;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    $color 50%,
+    transparent 100%
+  );
+  box-shadow: 0 0 10px rgba($color, 0.5);
+}
+
+// ========== 响应式光效 ==========
+// 在低性能设备上禁用昂贵的光效
+@mixin performance-glow {
+  @media (prefers-reduced-motion: reduce) {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}

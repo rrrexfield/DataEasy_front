@@ -155,10 +155,17 @@ const handleRefresh = () => {
 
 .map-card {
   height: 100%;
-
+  
+  // 使用 theme.scss 的卡片样式
   :deep(.el-card__body) {
     height: calc(100% - 60px);
     padding: 0;
+  }
+  
+  :deep(.el-card__header) {
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid $border-dark;
+    color: $text-primary-dark;
   }
 }
 
@@ -166,12 +173,16 @@ const handleRefresh = () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: $text-primary-dark;
+  font-weight: 500;
 }
 
 .map-container {
   width: 100%;
   height: 100%;
-  background-color: #1a1a1a;
+  background-color: $map-bg-dark;
+  border-radius: $border-radius-base;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 .right-panel {
@@ -186,6 +197,11 @@ const handleRefresh = () => {
 
   :deep(.el-card__body) {
     height: calc(100% - 60px);
+    background: radial-gradient(
+      circle at center,
+      rgba(26, 26, 26, 0.8),
+      rgba(15, 15, 15, 0.95)
+    );
   }
 }
 
@@ -211,14 +227,35 @@ const handleRefresh = () => {
 .ai-conclusion {
   font-size: 14px;
   line-height: 1.8;
-  color: #606266;
+  color: $text-regular-dark;
 }
 
 .ai-details {
   h4 {
     margin: 0 0 10px 0;
     font-size: 14px;
-    color: #303133;
+    color: $text-primary-dark;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    @include text-glow($neon-cyan, low);
+  }
+  
+  // 标签样式由 theme.scss 统一处理
+}
+
+// AI 卡片左侧发光边框
+.ai-card {
+  :deep(.el-alert) {
+    background-color: rgba(26, 26, 26, 0.8);
+    border: 1px solid $border-dark;
+    border-left: 3px solid $neon-purple;
+    box-shadow: -2px 0 10px rgba($neon-purple, 0.3);
+    color: $text-primary-dark;
+    
+    .el-alert__icon {
+      color: $neon-purple;
+      filter: drop-shadow(0 0 5px rgba($neon-purple, 0.8));
+    }
   }
 }
 </style>

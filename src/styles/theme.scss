@@ -1,31 +1,753 @@
-@import './variables.scss';
+/* ========== Element Plus Light 风格主题 ========== */
+/* 通过 CSS 自定义属性覆盖 Element Plus 默认主题 */
+/* 注意：variables.scss 和 mixins.scss 已通过 Vite 全局注入，无需手动导入 */
 
-/* Element Plus 主题定制 */
 :root {
-  --el-color-primary: #{$primary-color};
+  // 主色调（霓虹青色）
+  --el-color-primary: #{$neon-cyan};
+  --el-color-primary-light-3: #{lighten($neon-cyan, 10%)};
+  --el-color-primary-light-5: #{lighten($neon-cyan, 15%)};
+  --el-color-primary-light-7: #{lighten($neon-cyan, 20%)};
+  --el-color-primary-light-8: #{lighten($neon-cyan, 25%)};
+  --el-color-primary-light-9: #{lighten($neon-cyan, 30%)};
+  --el-color-primary-dark-2: #{darken($neon-cyan, 10%)};
+  
+  // 状态色
   --el-color-success: #{$success-color};
   --el-color-warning: #{$warning-color};
   --el-color-danger: #{$danger-color};
   --el-color-info: #{$info-color};
+  
+  // 背景色（暗色模式）
+  --el-bg-color: #{$bg-secondary};
+  --el-bg-color-page: #{$bg-primary};
+  --el-bg-color-overlay: #{$bg-overlay};
+  
+  // 文字颜色
+  --el-text-color-primary: #{$text-primary-dark};
+  --el-text-color-regular: #{$text-regular-dark};
+  --el-text-color-secondary: #{$text-secondary-dark};
+  --el-text-color-placeholder: #{$text-placeholder-dark};
+  --el-text-color-disabled: #{rgba(255, 255, 255, 0.3)};
+  
+  // 边框颜色
+  --el-border-color: #{$border-dark};
+  --el-border-color-light: #{$border-dark-light};
+  --el-border-color-lighter: #{$border-dark-lighter};
+  --el-border-color-extra-light: #{$border-extra-light};
+  --el-border-color-dark: #{rgba(255, 255, 255, 0.25)};
+  --el-border-color-darker: #{rgba(255, 255, 255, 0.3)};
+  
+  // 填充色（暗色变体）
+  --el-fill-color-blank: transparent;
+  --el-fill-color: #{rgba(255, 255, 255, 0.05)};
+  --el-fill-color-light: #{rgba(255, 255, 255, 0.08)};
+  --el-fill-color-lighter: #{rgba(255, 255, 255, 0.1)};
+  --el-fill-color-extra-light: #{rgba(255, 255, 255, 0.03)};
+  --el-fill-color-dark: #{rgba(255, 255, 255, 0.12)};
+  --el-fill-color-darker: #{rgba(255, 255, 255, 0.15)};
+  
+  // 阴影
+  --el-box-shadow: #{$box-shadow-base};
+  --el-box-shadow-light: #{$box-shadow-light};
+  --el-box-shadow-lighter: 0 1px 4px rgba(0, 0, 0, 0.2);
+  --el-box-shadow-dark: #{$box-shadow-dark};
+  
+  // 禁用状态
+  --el-disabled-bg-color: #{rgba(255, 255, 255, 0.05)};
+  --el-disabled-text-color: #{rgba(255, 255, 255, 0.3)};
+  --el-disabled-border-color: #{rgba(255, 255, 255, 0.08)};
+  
+  // 遮罩层
+  --el-overlay-color: #{rgba(0, 0, 0, 0.7)};
+  --el-overlay-color-light: #{rgba(0, 0, 0, 0.5)};
+  --el-overlay-color-lighter: #{rgba(0, 0, 0, 0.3)};
+  
+  // 字体
+  --el-font-size-base: 14px;
+  --el-font-size-medium: 14px;
+  --el-font-size-small: 13px;
+  --el-font-size-large: 16px;
+  --el-font-size-extra-large: 20px;
 }
 
-/* 自定义组件主题 */
-.el-menu {
-  border-right: none;
-}
-
+/* ========== 布局组件 ========== */
 .el-header {
   padding: 0 20px;
-  background-color: $bg-color;
-  box-shadow: $box-shadow-light;
+  background-color: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(20px);
+  box-shadow: none;
+  border-bottom: 1px solid rgba($neon-cyan, 0.3);
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, $neon-cyan, transparent);
+    box-shadow: 0 0 10px rgba($neon-cyan, 0.5);
+  }
 }
 
 .el-aside {
-  background-color: #304156;
+  background: linear-gradient(180deg, rgba(26, 26, 26, 0.95) 0%, rgba(15, 15, 15, 0.95) 100%);
   transition: width 0.3s;
+  border-right: 1px solid $border-dark;
 }
 
 .el-main {
   padding: 20px;
-  background-color: $bg-color-page;
+  background-color: $bg-primary;
+}
+
+/* ========== 菜单组件 ========== */
+.el-menu {
+  border-right: none;
+  background-color: transparent;
+  
+  &.el-menu--vertical {
+    .el-menu-item,
+    .el-sub-menu__title {
+      color: rgba(255, 255, 255, 0.7);
+      transition: $transition-glow;
+      
+      &:hover {
+        background-color: rgba($neon-cyan, 0.05);
+        color: $neon-cyan;
+        
+        .el-icon {
+          filter: drop-shadow(0 0 4px currentColor);
+        }
+      }
+      
+      &.is-active {
+        color: $neon-cyan !important;
+        background-color: rgba($neon-cyan, 0.1);
+        border-left: 4px solid $neon-cyan;
+        box-shadow: inset -2px 0 10px rgba($neon-cyan, 0.3);
+        
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          width: 4px;
+          background: $neon-cyan;
+          box-shadow: 0 0 10px $neon-cyan, 0 0 20px $neon-cyan;
+        }
+      }
+    }
+  }
+}
+
+/* ========== 按钮组件 ========== */
+.el-button {
+  transition: $transition-glow;
+  
+  // 主按钮：霓虹发光样式
+  &--primary {
+    background-color: transparent;
+    border: 2px solid $neon-cyan;
+    color: $neon-cyan;
+    box-shadow:
+      0 0 5px rgba($neon-cyan, 0.5),
+      0 0 10px rgba($neon-cyan, 0.3);
+    
+    &:hover,
+    &:focus {
+      background-color: rgba($neon-cyan, 0.1);
+      border-color: lighten($neon-cyan, 10%);
+      color: lighten($neon-cyan, 15%);
+      box-shadow:
+        0 0 10px rgba($neon-cyan, 0.8),
+        0 0 20px rgba($neon-cyan, 0.5),
+        0 0 30px rgba($neon-cyan, 0.3);
+      transform: translateY(-2px);
+    }
+    
+    &:active {
+      transform: translateY(0);
+    }
+    
+    &.is-disabled {
+      opacity: 0.4;
+      box-shadow: none;
+    }
+  }
+  
+  // 默认按钮：暗色边框
+  &--default {
+    background-color: transparent;
+    border-color: $border-dark-light;
+    color: $text-primary-dark;
+    
+    &:hover,
+    &:focus {
+      border-color: $border-dark-lighter;
+      background-color: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    }
+  }
+  
+  // 成功按钮
+  &--success {
+    background-color: transparent;
+    border: 2px solid $success-color;
+    color: $success-color;
+    box-shadow: 0 0 5px rgba($success-color, 0.3);
+    
+    &:hover,
+    &:focus {
+      box-shadow: 0 0 15px rgba($success-color, 0.5);
+      background-color: rgba($success-color, 0.1);
+    }
+  }
+  
+  // 警告按钮
+  &--warning {
+    background-color: transparent;
+    border: 2px solid $warning-color;
+    color: $warning-color;
+    box-shadow: 0 0 5px rgba($warning-color, 0.3);
+    
+    &:hover,
+    &:focus {
+      box-shadow: 0 0 15px rgba($warning-color, 0.5);
+      background-color: rgba($warning-color, 0.1);
+    }
+  }
+  
+  // 危险按钮
+  &--danger {
+    background-color: transparent;
+    border: 2px solid $danger-color;
+    color: $danger-color;
+    box-shadow: 0 0 5px rgba($danger-color, 0.3);
+    
+    &:hover,
+    &:focus {
+      box-shadow: 0 0 15px rgba($danger-color, 0.5);
+      background-color: rgba($danger-color, 0.1);
+    }
+  }
+  
+  // 文字按钮：保持简洁
+  &--text {
+    color: $neon-cyan;
+    
+    &:hover,
+    &:focus {
+      color: lighten($neon-cyan, 10%);
+      text-shadow: 0 0 5px rgba($neon-cyan, 0.5);
+    }
+  }
+}
+
+/* ========== 卡片组件 ========== */
+.el-card {
+  background: rgba(26, 26, 26, 0.8);
+  border: 1px solid $border-dark;
+  border-radius: $border-radius-large;
+  backdrop-filter: blur(10px);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: $transition-glow;
+  
+  &:hover {
+    border-color: $border-dark-light;
+    box-shadow:
+      0 8px 30px rgba(0, 0, 0, 0.6),
+      0 0 20px rgba(255, 255, 255, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+  }
+  
+  .el-card__header {
+    border-bottom: 1px solid $border-dark;
+    background: rgba(255, 255, 255, 0.02);
+    color: $text-primary-dark;
+  }
+  
+  .el-card__body {
+    color: $text-regular-dark;
+  }
+}
+
+/* ========== 表格组件 ========== */
+.el-table {
+  --el-table-bg-color: #{$bg-secondary};
+  --el-table-tr-bg-color: #{$bg-secondary};
+  --el-table-header-bg-color: #{$bg-elevated};
+  --el-table-row-hover-bg-color: #{rgba($neon-cyan, 0.05)};
+  --el-table-border-color: #{$border-dark};
+  --el-table-text-color: #{$text-regular-dark};
+  --el-table-header-text-color: #{$text-primary-dark};
+  
+  background-color: $bg-secondary;
+  color: $text-regular-dark;
+  
+  th.el-table__cell {
+    background-color: $bg-elevated;
+    color: $text-primary-dark;
+    font-weight: 600;
+    border-bottom: 2px solid $border-dark-light;
+  }
+  
+  tr {
+    background-color: $bg-secondary;
+    
+    &:hover {
+      background-color: rgba($neon-cyan, 0.05) !important;
+      box-shadow: inset 0 0 20px rgba($neon-cyan, 0.1);
+    }
+  }
+  
+  td.el-table__cell {
+    border-bottom: 1px solid $border-dark;
+  }
+  
+  // 操作链接
+  .el-link {
+    color: $neon-cyan;
+    
+    &:hover {
+      color: lighten($neon-cyan, 10%);
+      text-decoration: underline;
+      text-shadow: 0 0 5px rgba($neon-cyan, 0.5);
+    }
+  }
+}
+
+/* ========== 输入框组件 ========== */
+.el-input {
+  .el-input__wrapper {
+    background-color: rgba(26, 26, 26, 0.6);
+    border: 1px solid $border-dark;
+    box-shadow: none;
+    transition: $transition-glow;
+    
+    &:hover {
+      border-color: $border-dark-light;
+    }
+    
+    &.is-focus {
+      border-color: $neon-cyan;
+      box-shadow:
+        0 0 10px rgba($neon-cyan, 0.3),
+        inset 0 0 5px rgba($neon-cyan, 0.1);
+    }
+  }
+  
+  .el-input__inner {
+    color: $text-primary-dark;
+    
+    &::placeholder {
+      color: $text-placeholder-dark;
+    }
+  }
+}
+
+.el-textarea {
+  .el-textarea__inner {
+    background-color: rgba(26, 26, 26, 0.6);
+    border-color: $border-dark;
+    color: $text-primary-dark;
+    
+    &:hover {
+      border-color: $border-dark-light;
+    }
+    
+    &:focus {
+      border-color: $neon-cyan;
+      box-shadow: 0 0 10px rgba($neon-cyan, 0.3);
+    }
+    
+    &::placeholder {
+      color: $text-placeholder-dark;
+    }
+  }
+}
+
+/* ========== 下拉选择组件 ========== */
+.el-select {
+  .el-input .el-input__wrapper {
+    background-color: rgba(26, 26, 26, 0.6);
+  }
+}
+
+.el-select-dropdown {
+  background-color: rgba(26, 26, 26, 0.95);
+  border: 1px solid $border-dark-light;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  
+  .el-select-dropdown__item {
+    color: $text-regular-dark;
+    
+    &:hover {
+      background-color: rgba($neon-cyan, 0.1);
+      color: $neon-cyan;
+    }
+    
+    &.selected {
+      color: $neon-cyan;
+      font-weight: 600;
+    }
+  }
+}
+
+/* ========== 日期选择器 ========== */
+.el-picker-panel {
+  background-color: rgba(26, 26, 26, 0.95);
+  border: 1px solid $border-dark-light;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  color: $text-regular-dark;
+  
+  .el-date-picker__header {
+    border-bottom: 1px solid $border-dark;
+  }
+  
+  .el-picker-panel__icon-btn {
+    color: $text-regular-dark;
+    
+    &:hover {
+      color: $neon-cyan;
+    }
+  }
+  
+  .el-date-table td.available:hover {
+    color: $neon-cyan;
+  }
+  
+  .el-date-table td.today {
+    color: $neon-cyan;
+    font-weight: 700;
+  }
+  
+  .el-date-table td.in-range div,
+  .el-date-table td.in-range div:hover,
+  .el-date-table.is-week-mode .el-date-table__row.current div,
+  .el-date-table.is-week-mode .el-date-table__row:hover div {
+    background-color: rgba($neon-cyan, 0.1);
+  }
+  
+  .el-date-table td.selected div {
+    background-color: $neon-cyan;
+    color: #000;
+  }
+}
+
+/* ========== 分页器 ========== */
+.el-pagination {
+  .el-pager li {
+    background-color: transparent;
+    border: 1px solid $border-dark;
+    color: $text-regular-dark;
+    
+    &:hover {
+      color: $neon-cyan;
+      border-color: $neon-cyan;
+      box-shadow: 0 0 8px rgba($neon-cyan, 0.3);
+    }
+    
+    &.is-active {
+      background-color: rgba($neon-cyan, 0.2);
+      border-color: $neon-cyan;
+      color: $neon-cyan;
+      box-shadow: 0 0 10px rgba($neon-cyan, 0.5);
+    }
+  }
+  
+  .btn-prev,
+  .btn-next {
+    background-color: transparent;
+    border: 1px solid $border-dark;
+    color: $text-regular-dark;
+    
+    &:hover:not(:disabled) {
+      color: $neon-cyan;
+      border-color: $neon-cyan;
+      box-shadow: 0 0 8px rgba($neon-cyan, 0.3);
+    }
+  }
+}
+
+/* ========== 标签组件 ========== */
+.el-tag {
+  background-color: transparent;
+  border: 1px solid currentColor;
+  color: $text-regular-dark;
+  
+  &.el-tag--primary {
+    border-color: $neon-cyan;
+    color: $neon-cyan;
+    box-shadow: 0 0 5px rgba($neon-cyan, 0.3);
+  }
+  
+  &.el-tag--success {
+    border-color: $success-color;
+    color: $success-color;
+    box-shadow: 0 0 5px rgba($success-color, 0.3);
+  }
+  
+  &.el-tag--warning {
+    border-color: $warning-color;
+    color: $warning-color;
+    box-shadow: 0 0 5px rgba($warning-color, 0.3);
+  }
+  
+  &.el-tag--danger {
+    border-color: $danger-color;
+    color: $danger-color;
+    box-shadow: 0 0 5px rgba($danger-color, 0.3);
+  }
+}
+
+/* ========== 警告提示 ========== */
+.el-alert {
+  background-color: rgba(26, 26, 26, 0.8);
+  border: 1px solid $border-dark;
+  color: $text-primary-dark;
+  
+  &.el-alert--info {
+    border-left: 3px solid $info-color;
+  }
+  
+  &.el-alert--success {
+    border-left: 3px solid $success-color;
+    box-shadow: -2px 0 10px rgba($success-color, 0.3);
+  }
+  
+  &.el-alert--warning {
+    border-left: 3px solid $warning-color;
+    box-shadow: -2px 0 10px rgba($warning-color, 0.3);
+  }
+  
+  &.el-alert--error {
+    border-left: 3px solid $danger-color;
+    box-shadow: -2px 0 10px rgba($danger-color, 0.3);
+  }
+}
+
+/* ========== 进度条 ========== */
+.el-progress {
+  .el-progress-bar__outer {
+    background-color: rgba(26, 26, 26, 0.8);
+    border: 1px solid $border-dark;
+  }
+  
+  .el-progress-bar__inner {
+    background: linear-gradient(90deg, $neon-cyan, $neon-purple);
+    box-shadow:
+      0 0 10px rgba($neon-cyan, 0.8),
+      inset 0 0 5px rgba(255, 255, 255, 0.3);
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+      );
+      animation: shimmer 2s infinite;
+    }
+  }
+}
+
+/* ========== 滑块 ========== */
+.el-slider {
+  .el-slider__runway {
+    background-color: rgba(26, 26, 26, 0.8);
+    border: 1px solid $border-dark;
+  }
+  
+  .el-slider__bar {
+    background: linear-gradient(90deg, $neon-cyan, $neon-purple);
+    box-shadow: 0 0 10px rgba($neon-cyan, 0.5);
+  }
+  
+  .el-slider__button {
+    border: 2px solid $neon-cyan;
+    background-color: $bg-elevated;
+    box-shadow:
+      0 0 10px rgba($neon-cyan, 0.8),
+      0 0 20px rgba($neon-cyan, 0.5);
+    
+    &:hover {
+      box-shadow:
+        0 0 15px rgba($neon-cyan, 1),
+        0 0 30px rgba($neon-cyan, 0.7);
+      transform: scale(1.2);
+    }
+  }
+}
+
+/* ========== 弹出层通用样式 ========== */
+.el-popper {
+  background-color: rgba(26, 26, 26, 0.95);
+  border: 1px solid $border-dark-light;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  color: $text-regular-dark;
+}
+
+/* ========== Loading 加载 ========== */
+.el-loading-mask {
+  background-color: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(5px);
+}
+
+.el-loading-spinner {
+  .circular {
+    stroke: $neon-cyan;
+    filter: drop-shadow(0 0 5px $neon-cyan);
+  }
+  
+  .el-loading-text {
+    color: $text-primary-dark;
+    text-shadow: 0 0 5px rgba($neon-cyan, 0.5);
+  }
+}
+
+/* ========== 空状态 ========== */
+.el-empty {
+  .el-empty__description {
+    color: $text-secondary-dark;
+  }
+}
+
+/* ========== 对话框 ========== */
+.el-dialog {
+  background-color: rgba(26, 26, 26, 0.95);
+  border: 1px solid $border-dark-light;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.8);
+  
+  .el-dialog__header {
+    border-bottom: 1px solid $border-dark;
+    
+    .el-dialog__title {
+      color: $text-primary-dark;
+    }
+  }
+  
+  .el-dialog__body {
+    color: $text-regular-dark;
+  }
+  
+  .el-dialog__footer {
+    border-top: 1px solid $border-dark;
+  }
+}
+
+/* ========== 抽屉 ========== */
+.el-drawer {
+  background-color: rgba(26, 26, 26, 0.95);
+  backdrop-filter: blur(20px);
+  
+  .el-drawer__header {
+    border-bottom: 1px solid $border-dark;
+    color: $text-primary-dark;
+  }
+  
+  .el-drawer__body {
+    color: $text-regular-dark;
+  }
+}
+
+/* ========== 工具提示 ========== */
+.el-tooltip__popper {
+  background-color: rgba(26, 26, 26, 0.95);
+  border: 1px solid $border-dark-light;
+  backdrop-filter: blur(10px);
+  color: $text-primary-dark;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* ========== 下拉菜单 ========== */
+.el-dropdown-menu {
+  background-color: rgba(26, 26, 26, 0.95);
+  border: 1px solid $border-dark-light;
+  backdrop-filter: blur(10px);
+  
+  .el-dropdown-menu__item {
+    color: $text-regular-dark;
+    
+    &:hover {
+      background-color: rgba($neon-cyan, 0.1);
+      color: $neon-cyan;
+    }
+  }
+}
+
+/* ========== 时间轴 ========== */
+.el-timeline-item {
+  .el-timeline-item__node {
+    background-color: $neon-cyan;
+    box-shadow: 0 0 10px rgba($neon-cyan, 0.8);
+  }
+  
+  .el-timeline-item__tail {
+    border-left-color: $border-dark;
+  }
+  
+  .el-timeline-item__wrapper {
+    color: $text-regular-dark;
+  }
+}
+
+/* ========== 步骤条 ========== */
+.el-steps {
+  .el-step__title {
+    color: $text-regular-dark;
+    
+    &.is-process {
+      color: $neon-cyan;
+      text-shadow: 0 0 5px rgba($neon-cyan, 0.5);
+    }
+  }
+  
+  .el-step__head.is-process {
+    border-color: $neon-cyan;
+    box-shadow: 0 0 10px rgba($neon-cyan, 0.8);
+  }
+  
+  .el-step__line {
+    background-color: $border-dark;
+  }
+}
+
+/* ========== 面包屑 ========== */
+.el-breadcrumb {
+  .el-breadcrumb__item {
+    .el-breadcrumb__inner {
+      color: $text-secondary-dark;
+      
+      &:hover {
+        color: $neon-cyan;
+        text-shadow: 0 0 5px rgba($neon-cyan, 0.5);
+      }
+    }
+    
+    &:last-child .el-breadcrumb__inner {
+      color: $text-primary-dark;
+    }
+  }
+  
+  .el-breadcrumb__separator {
+    color: $text-secondary-dark;
+  }
 }

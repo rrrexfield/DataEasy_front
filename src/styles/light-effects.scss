@@ -1,0 +1,361 @@
+// Light 风格效果工具类
+// 提供开箱即用的发光、渐变、阴影等工具类
+
+// ========== 霓虹色系工具类 ==========
+.neon-cyan {
+  color: $neon-cyan !important;
+  @include text-glow($neon-cyan, medium);
+}
+
+.neon-purple {
+  color: $neon-purple !important;
+  @include text-glow($neon-purple, medium);
+}
+
+.neon-pink {
+  color: $neon-pink !important;
+  @include text-glow($neon-pink, medium);
+}
+
+.neon-blue {
+  color: $neon-blue !important;
+  @include text-glow($neon-blue, medium);
+}
+
+.neon-orange {
+  color: $neon-orange !important;
+  @include text-glow($neon-orange, medium);
+}
+
+// ========== 文字发光强度 ==========
+.text-glow-low {
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.text-glow-medium {
+  text-shadow:
+    0 0 5px rgba(255, 255, 255, 0.8),
+    0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.text-glow-high {
+  text-shadow:
+    0 0 5px #fff,
+    0 0 10px #fff,
+    0 0 20px rgba(255, 255, 255, 0.8),
+    0 0 40px rgba(255, 255, 255, 0.5);
+}
+
+// ========== 发光边框 ==========
+.glow-border-cyan {
+  border: 1px solid $neon-cyan;
+  box-shadow:
+    0 0 5px rgba($neon-cyan, 0.5),
+    inset 0 0 5px rgba($neon-cyan, 0.2);
+}
+
+.glow-border-purple {
+  border: 1px solid $neon-purple;
+  box-shadow:
+    0 0 5px rgba($neon-purple, 0.5),
+    inset 0 0 5px rgba($neon-purple, 0.2);
+}
+
+.glow-border-pink {
+  border: 1px solid $neon-pink;
+  box-shadow:
+    0 0 5px rgba($neon-pink, 0.5),
+    inset 0 0 5px rgba($neon-pink, 0.2);
+}
+
+// ========== 发光卡片容器 ==========
+.light-card {
+  @include glow-card();
+}
+
+.light-card-elevated {
+  @include glow-card(rgba(37, 37, 37, 0.9), rgba(255, 255, 255, 0.15));
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+// ========== 磨砂玻璃 ==========
+.frosted-light {
+  @include frosted-glass(10px, 0.05);
+}
+
+.frosted-medium {
+  @include frosted-glass(15px, 0.08);
+}
+
+.frosted-heavy {
+  @include frosted-glass(20px, 0.1);
+}
+
+// ========== 聚光灯容器 ==========
+.spotlight {
+  @include spotlight-effect();
+}
+
+.spotlight-strong {
+  @include spotlight-effect(800px, 0.15);
+}
+
+// ========== 发光分割线 ==========
+.glow-divider {
+  @include glow-divider($neon-cyan);
+  margin: 24px 0;
+}
+
+.glow-divider-vertical {
+  @include glow-divider($neon-cyan);
+  width: 1px;
+  height: 100%;
+  margin: 0 24px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    $neon-cyan 50%,
+    transparent 100%
+  );
+}
+
+// ========== 发光按钮 ==========
+.neon-button-cyan {
+  @include neon-button($neon-cyan);
+}
+
+.neon-button-purple {
+  @include neon-button($neon-purple);
+}
+
+.neon-button-pink {
+  @include neon-button($neon-pink);
+}
+
+.neon-button-large {
+  @include neon-button($neon-cyan, lg);
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+// ========== 背景渐变 ==========
+.bg-dark-gradient {
+  background: linear-gradient(
+    180deg,
+    rgba(26, 26, 26, 0.95) 0%,
+    rgba(15, 15, 15, 0.95) 100%
+  );
+}
+
+.bg-cyber-gradient {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 204, 0.1) 0%,
+    rgba(183, 148, 246, 0.1) 50%,
+    rgba(255, 0, 110, 0.1) 100%
+  );
+}
+
+// ========== 光晕效果 ==========
+.glow-sm {
+  box-shadow:
+    0 0 5px var(--glow-color, rgba(0, 255, 204, 0.5)),
+    0 0 10px var(--glow-color, rgba(0, 255, 204, 0.3));
+}
+
+.glow-md {
+  box-shadow:
+    0 0 10px var(--glow-color, rgba(0, 255, 204, 0.5)),
+    0 0 20px var(--glow-color, rgba(0, 255, 204, 0.3)),
+    0 0 30px var(--glow-color, rgba(0, 255, 204, 0.2));
+}
+
+.glow-lg {
+  box-shadow:
+    0 0 15px var(--glow-color, rgba(0, 255, 204, 0.5)),
+    0 0 30px var(--glow-color, rgba(0, 255, 204, 0.3)),
+    0 0 45px var(--glow-color, rgba(0, 255, 204, 0.2)),
+    0 0 60px var(--glow-color, rgba(0, 255, 204, 0.1));
+}
+
+// ========== 数据面板 ==========
+.data-panel {
+  @include glow-card();
+  padding: 24px;
+  
+  .panel-title {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  
+  .panel-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: $neon-cyan;
+    @include text-glow($neon-cyan, medium);
+    margin-bottom: 8px;
+  }
+  
+  .panel-unit {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-left: 8px;
+  }
+  
+  .panel-trend {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    
+    &.up {
+      color: $success-color;
+    }
+    
+    &.down {
+      color: $danger-color;
+    }
+  }
+}
+
+// ========== 标签牌效果 ==========
+.neon-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 4px;
+  background-color: transparent;
+  border: 1px solid $neon-cyan;
+  color: $neon-cyan;
+  font-size: 12px;
+  font-weight: 500;
+  box-shadow:
+    0 0 5px rgba($neon-cyan, 0.3),
+    inset 0 0 5px rgba($neon-cyan, 0.1);
+  
+  &.success {
+    border-color: $success-color;
+    color: $success-color;
+    box-shadow:
+      0 0 5px rgba($success-color, 0.3),
+      inset 0 0 5px rgba($success-color, 0.1);
+  }
+  
+  &.warning {
+    border-color: $warning-color;
+    color: $warning-color;
+    box-shadow:
+      0 0 5px rgba($warning-color, 0.3),
+      inset 0 0 5px rgba($warning-color, 0.1);
+  }
+  
+  &.danger {
+    border-color: $danger-color;
+    color: $danger-color;
+    box-shadow:
+      0 0 5px rgba($danger-color, 0.3),
+      inset 0 0 5px rgba($danger-color, 0.1);
+  }
+}
+
+// ========== 输入框发光 ==========
+.glow-input {
+  background: rgba(26, 26, 26, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e0e0e0;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  
+  &:focus {
+    outline: none;
+    border-color: $neon-cyan;
+    box-shadow:
+      0 0 10px rgba($neon-cyan, 0.3),
+      inset 0 0 5px rgba($neon-cyan, 0.1);
+  }
+  
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+// ========== 加载状态 ==========
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: $neon-cyan;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  box-shadow: 0 0 15px rgba($neon-cyan, 0.5);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// =========== 能量条 ==========
+.energy-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(26, 26, 26, 0.8);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  
+  .energy-fill {
+    height: 100%;
+    background: linear-gradient(90deg, $neon-cyan, $neon-purple);
+    border-radius: 4px;
+    box-shadow:
+      0 0 10px rgba($neon-cyan, 0.8),
+      inset 0 0 5px rgba(255, 255, 255, 0.3);
+    transition: width 0.3s ease;
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+      );
+      animation: shimmer 2s infinite;
+    }
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+// ========== 响应式优化 ==========
+@media (max-width: 768px) {
+  .glow-lg {
+    @include multi-glow($neon-cyan, md); // 移动端减少光晕强度
+  }
+  
+  .data-panel .panel-value {
+    font-size: 24px;
+  }
+}

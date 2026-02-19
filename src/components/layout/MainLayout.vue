@@ -9,7 +9,7 @@
       </el-aside>
       <el-main class="layout-main">
         <router-view v-slot="{ Component }">
-          <transition name="fade" mode="out-in">
+          <transition name="glow-fade" mode="out-in">
             <component :is="Component" />
           </transition>
         </router-view>
@@ -30,29 +30,35 @@ const sidebarWidth = ref('200px')
 .main-layout {
   height: 100vh;
   width: 100%;
+  background-color: $bg-primary;
 }
 
 .layout-header {
   padding: 0;
-  height: 60px;
-  background-color: #fff;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
-  z-index: 1000;
+  height: $navbar-height;
+  background-color: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(20px);
+  box-shadow: none;
+  border-bottom: 1px solid rgba($neon-cyan, 0.3);
+  z-index: $z-index-navbar;
+  position: relative;
+  
+  // 底部发光线
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, $neon-cyan, transparent);
+    box-shadow: 0 0 10px rgba($neon-cyan, 0.5);
+  }
 }
 
 .layout-main {
   padding: 20px;
-  background-color: #f2f3f5;
+  background-color: $bg-primary;
   overflow: auto;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
 }
 </style>

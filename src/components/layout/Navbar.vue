@@ -81,11 +81,23 @@ const handleHelp = () => {
     margin: 0;
     font-size: 20px;
     font-weight: 600;
-    color: #303133;
+    color: $text-primary-dark;
+    @include text-glow($neon-cyan, low);
+    transition: $transition-glow;
 
     .el-icon {
       font-size: 24px;
-      color: #409eff;
+      color: $neon-cyan;
+      filter: drop-shadow(0 0 8px rgba($neon-cyan, 0.8));
+      animation: glow-pulse 2s ease-in-out infinite;
+    }
+    
+    &:hover {
+      @include text-glow($neon-cyan, medium);
+      
+      .el-icon {
+        filter: drop-shadow(0 0 12px rgba($neon-cyan, 1));
+      }
     }
   }
 }
@@ -96,10 +108,37 @@ const handleHelp = () => {
     align-items: center;
     gap: 5px;
     font-size: 14px;
+    color: $text-regular-dark;
 
     .el-icon {
-      color: #606266;
+      color: $text-regular-dark;
+    }
+    
+    // 覆盖标签为霓虹牌效果
+    :deep(.el-tag) {
+      background-color: transparent;
+      border: 1px solid currentColor;
+      
+      &.el-tag--success {
+        color: $success-color;
+        border-color: $success-color;
+        box-shadow: 0 0 5px rgba($success-color, 0.3);
+      }
+      
+      &.el-tag--warning {
+        color: $warning-color;
+        border-color: $warning-color;
+        box-shadow: 0 0 5px rgba($warning-color, 0.3);
+      }
+      
+      &.el-tag--info {
+        color: $info-color;
+        border-color: $info-color;
+        box-shadow: 0 0 5px rgba($info-color, 0.3);
+      }
     }
   }
+  
+  // 按钮样式由 theme.scss 统一处理
 }
 </style>

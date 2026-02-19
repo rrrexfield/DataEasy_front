@@ -7,8 +7,8 @@ import pinia from './stores'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 // 样式导入
+// 注意：variables.scss 和 mixins.scss 已通过 Vite 全局注入，无需手动导入
 import 'element-plus/dist/index.css'
-import './styles/variables.scss'
 import './styles/global.scss'
 import './styles/theme.scss'
 

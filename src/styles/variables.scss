@@ -1,54 +1,96 @@
-// SCSS 变量定义
-// 主题色
-$primary-color: #409eff;
+// ========== Light 风格变量系统 ==========
+
+// ===== 霓虹色系（主配色方案）=====
+$neon-cyan: #00ffcc;
+$neon-purple: #b794f6;
+$neon-pink: #ff006e;
+$neon-blue: #3b82f6;
+$neon-orange: #ff6b35;
+
+// ===== 暗色调色板 =====
+// 背景层级
+$bg-primary: #0a0a0a;        // 最深背景（body）
+$bg-secondary: #1a1a1a;      // 次级背景（卡片、侧边栏）
+$bg-elevated: #252525;       // 悬浮层背景（表头、强调区域）
+$bg-overlay: rgba(10, 10, 10, 0.8); // 遮罩层
+
+// 文字颜色（暗色模式）
+$text-primary-dark: #e0e0e0;
+$text-regular-dark: #b0b0b0;
+$text-secondary-dark: #808080;
+$text-placeholder-dark: #505050;
+
+// 边框颜色（暗色模式）
+$border-dark: rgba(255, 255, 255, 0.1);
+$border-dark-light: rgba(255, 255, 255, 0.15);
+$border-dark-lighter: rgba(255, 255, 255, 0.2);
+
+// ===== 主题色（继承原有 + 改为霓虹色）=====
+$primary-color: $neon-cyan;   // 主色调改为霓虹青色
 $success-color: #67c23a;
 $warning-color: #e6a23c;
 $danger-color: #f56c6c;
 $info-color: #909399;
 
-// 土壤质量等级颜色
+// ===== 土壤质量等级颜色（保持原有业务配色）=====
 $soil-excellent: #67c23a;
 $soil-good: #95d475;
 $soil-medium: #e6a23c;
 $soil-poor: #f78989;
 $soil-degraded: #f56c6c;
 
-// 布局相关
+// ===== 布局相关 =====
 $navbar-height: 60px;
 $sidebar-width: 200px;
 $sidebar-collapsed-width: 64px;
 
-// 地图背景色
+// ===== 地图背景色 =====
 $map-bg-dark: #1a1a1a;
 $map-bg-light: #f0f2f5;
 
-// 文字颜色
-$text-primary: #303133;
-$text-regular: #606266;
-$text-secondary: #909399;
-$text-placeholder: #c0c4cc;
+// ===== 文字颜色（兼容原有变量）=====
+$text-primary: $text-primary-dark;
+$text-regular: $text-regular-dark;
+$text-secondary: $text-secondary-dark;
+$text-placeholder: $text-placeholder-dark;
 
-// 边框颜色
-$border-base: #dcdfe6;
-$border-light: #e4e7ed;
-$border-lighter: #ebeef5;
-$border-extra-light: #f2f6fc;
+// ===== 边框颜色（兼容原有变量）=====
+$border-base: $border-dark;
+$border-light: $border-dark-light;
+$border-lighter: $border-dark-lighter;
+$border-extra-light: rgba(255, 255, 255, 0.05);
 
-// 背景色
-$bg-color: #ffffff;
-$bg-color-page: #f2f3f5;
-$bg-color-overlay: #ffffff;
+// ===== 背景色（改为暗色）=====
+$bg-color: $bg-secondary;
+$bg-color-page: $bg-primary;
+$bg-color-overlay: $bg-overlay;
 
-// 阴影
-$box-shadow-base: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-$box-shadow-dark: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
-$box-shadow-light: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+// ===== 光晕尺寸（新增）=====
+$glow-sm: 5px;
+$glow-md: 10px;
+$glow-lg: 20px;
+$glow-xl: 40px;
+$glow-xxl: 60px;
 
-// 圆角
+// ===== 阴影（改为适配暗色模式 + 发光效果）=====
+$box-shadow-base: 0 4px 20px rgba(0, 0, 0, 0.5);
+$box-shadow-dark: 0 8px 32px rgba(0, 0, 0, 0.6);
+$box-shadow-light: 0 2px 8px rgba(0, 0, 0, 0.3);
+$box-shadow-glow: 0 0 20px rgba($neon-cyan, 0.3);
+
+// ===== 圆角 =====
 $border-radius-base: 4px;
 $border-radius-small: 2px;
 $border-radius-large: 8px;
+$border-radius-xl: 12px;
 
-// 过渡动画
+// ===== 过渡动画 =====
 $transition-base: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 $transition-fade: opacity 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+$transition-glow: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+// ===== 层级（z-index）=====
+$z-index-navbar: 1000;
+$z-index-sidebar: 900;
+$z-index-modal: 2000;
+$z-index-tooltip: 3000;
