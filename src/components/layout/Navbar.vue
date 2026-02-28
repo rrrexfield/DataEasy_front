@@ -3,7 +3,7 @@
     <div class="navbar-left">
       <h1 class="app-title">
         <el-icon><Odometer /></el-icon>
-        土壤质量智能监测平台
+        DataEasy 土壤质量智能监测平台
       </h1>
     </div>
 
@@ -79,14 +79,14 @@ const handleHelp = () => {
     align-items: center;
     gap: 10px;
     margin: 0;
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 600;
     color: $text-primary-dark;
     @include text-glow($neon-cyan, low);
     transition: $transition-glow;
 
     .el-icon {
-      font-size: 24px;
+      font-size: 28px;
       color: $neon-cyan;
       filter: drop-shadow(0 0 8px rgba($neon-cyan, 0.8));
       animation: glow-pulse 2s ease-in-out infinite;
@@ -107,7 +107,7 @@ const handleHelp = () => {
     display: flex;
     align-items: center;
     gap: 5px;
-    font-size: 14px;
+    font-size: 18px;
     color: $text-regular-dark;
 
     .el-icon {

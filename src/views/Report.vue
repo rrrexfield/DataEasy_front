@@ -245,20 +245,20 @@ const handleExport = () => {
   margin-bottom: 40px;
 
   h1 {
-    font-size: 32px;
+    font-size: 36px;
     text-align: center;
     margin-bottom: 20px;
   }
 
   h2 {
-    font-size: 24px;
+    font-size: 28px;
     margin-bottom: 16px;
     border-bottom: 2px solid #409eff;
     padding-bottom: 8px;
   }
 
   h3 {
-    font-size: 18px;
+    font-size: 22px;
     margin: 16px 0 8px;
   }
 
@@ -273,18 +273,18 @@ const handleExport = () => {
     padding: 100px 0;
 
     h1 {
-      font-size: 36px;
+      font-size: 40px;
       margin-bottom: 30px;
     }
 
     .subtitle {
-      font-size: 20px;
+      font-size: 24px;
       color: #909399;
       margin-bottom: 10px;
     }
 
     .date {
-      font-size: 14px;
+      font-size: 18px;
       color: #c0c4cc;
     }
   }
@@ -298,18 +298,18 @@ const handleExport = () => {
   color: white;
 
   .index-value {
-    font-size: 72px;
+    font-size: 76px;
     font-weight: bold;
     margin-bottom: 10px;
   }
 
   .index-label {
-    font-size: 20px;
+    font-size: 24px;
     margin-bottom: 20px;
   }
 
   .index-desc {
-    font-size: 16px;
+    font-size: 20px;
     opacity: 0.9;
   }
 }

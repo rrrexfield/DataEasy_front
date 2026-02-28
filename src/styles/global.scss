@@ -165,13 +165,13 @@ body {
 }
 
 /* ========== 文字大小 ========== */
-.text-xs { font-size: 12px; }
-.text-sm { font-size: 13px; }
-.text-base { font-size: 14px; }
-.text-lg { font-size: 16px; }
-.text-xl { font-size: 18px; }
-.text-2xl { font-size: 24px; }
-.text-3xl { font-size: 32px; }
+.text-xs { font-size: 16px; }
+.text-sm { font-size: 17px; }
+.text-base { font-size: 18px; }
+.text-lg { font-size: 20px; }
+.text-xl { font-size: 22px; }
+.text-2xl { font-size: 28px; }
+.text-3xl { font-size: 36px; }
 
 /* ========== 字重 ========== */
 .font-thin { font-weight: 300; }
@@ -243,7 +243,7 @@ body {
     border-bottom: 1px solid $border-dark;
     
     .page-title {
-      font-size: 24px;
+      font-size: 28px;
       font-weight: 700;
       color: $text-primary-dark;
       @include text-glow($neon-cyan, low);
@@ -251,7 +251,7 @@ body {
     
     .page-description {
       margin-top: 8px;
-      font-size: 14px;
+      font-size: 18px;
       color: $text-secondary-dark;
     }
   }
@@ -301,7 +301,7 @@ body {
   }
   
   .loading-text {
-    font-size: 14px;
+    font-size: 18px;
     color: $text-secondary-dark;
     @include text-glow($neon-cyan, low);
   }
@@ -324,18 +324,18 @@ body {
   color: $text-secondary-dark;
   
   .empty-icon {
-    font-size: 64px;
+    font-size: 68px;
     margin-bottom: 16px;
     opacity: 0.3;
   }
   
   .empty-text {
-    font-size: 14px;
+    font-size: 18px;
     margin-bottom: 8px;
   }
   
   .empty-description {
-    font-size: 12px;
+    font-size: 16px;
     color: $text-placeholder-dark;
   }
 }
@@ -363,7 +363,7 @@ code {
   border: 1px solid $border-dark;
   border-radius: 3px;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 13px;
+  font-size: 17px;
   color: $neon-purple;
 }
 
@@ -413,7 +413,7 @@ blockquote {
   min-width: 20px;
   height: 20px;
   padding: 0 6px;
-  font-size: 12px;
+  font-size: 16px;
   line-height: 1;
   border-radius: 10px;
   background-color: $danger-color;
