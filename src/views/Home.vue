@@ -6,7 +6,7 @@
         <el-card class="map-card" shadow="never">
           <template #header>
             <div class="card-header">
-              <span>研究区地图 - 土壤质量综合指数热力图</span>
+              <span>研究区地图</span>
               <div class="header-actions">
                 <!-- 行政区快速定位 -->
                 <el-cascader
@@ -151,16 +151,24 @@
                   </el-tag>
                 </div>
                 <div class="index-sub-row">
-                  <span class="sub-label">糙度度</span>
-                  <span class="sub-value">中（± {{ soilIndex.uncertainty }}）</span>
+                  <span class="sub-label">有机质含量</span>
+                  <span class="sub-value">{{ soilIndex.organicMatter }}%</span>
                 </div>
                 <div class="index-sub-row">
-                  <span class="sub-label">含水量</span>
+                  <span class="sub-label">土壤含水量</span>
                   <span class="sub-value success">{{ soilIndex.waterContent }}%</span>
                 </div>
                 <div class="index-sub-row">
-                  <span class="sub-label">盐渍化</span>
-                  <span class="sub-value warning">{{ soilIndex.salinization }}%</span>
+                  <span class="sub-label">地形起伏</span>
+                  <span class="sub-value">{{ soilIndex.terrainUndulation }}%</span>
+                </div>
+                <div class="index-sub-row">
+                  <span class="sub-label">盐分特征</span>
+                  <span class="sub-value warning">{{ soilIndex.salinityFeature }}%</span>
+                </div>
+                <div class="index-sub-row">
+                  <span class="sub-label">酸碱度</span>
+                  <span class="sub-value success">{{ soilIndex.phLevel }}</span>
                 </div>
                 <!-- 可信度条 -->
                 <div class="confidence-bar-wrap">
@@ -534,13 +542,16 @@ const handleRegionChange = (val: any) => {
 // ─── 第一层：不确定性可视化 ───────────────────────────────────────
 const soilIndex = ref({
   value: 72.4,
-  uncertainty: 6.3,
-  confidenceText: '中等偏高',
-  confidenceLevel: 'medium',      // low / medium / high
-  confidenceType: 'warning' as const,
-  confidencePct: 72,
-  waterContent: 2.1,
-  salinization: 0.8,
+  uncertainty: 3,
+  confidenceText: '高',
+  confidenceLevel: 'high',      // low / medium / high
+  confidenceType: 'success' as const,
+  confidencePct: 85,
+  organicMatter: 42,
+  waterContent: 31,
+  terrainUndulation: 15,
+  salinityFeature: 12,
+  phLevel: '适中',
 })
 
 const confidenceBarColor = computed(() => {
@@ -570,8 +581,8 @@ const riskZones = ref<RiskZone[]>([
     label: '西北部盐渍化区',
     riskLevel: 'high',
     riskText: '高',
-    confidence: '低',
-    hint: '高风险 + 低可信，建议人工复核',
+    confidence: '高',
+    hint: '高风险 + 高可信，建议优先复核',
     action: '优先复核',
     tagType: 'danger',
     lonLat: [110.15, 29.35],  // 西北部位置
@@ -581,8 +592,8 @@ const riskZones = ref<RiskZone[]>([
     label: '中部有机质低洼区',
     riskLevel: 'medium',
     riskText: '中',
-    confidence: '中',
-    hint: '中风险 + 中可信，建议加强监测',
+    confidence: '高',
+    hint: '中风险 + 高可信，建议加强监测',
     action: '加强监测',
     tagType: 'warning',
     lonLat: [110.32, 29.24],  // 中部位置
@@ -620,7 +631,7 @@ const focusZone = (zone: RiskZone) => {
 const aiConclusion = ref(
   '该区域土壤质量偏低，主要受盐分累积和地表水分不足共同影响。西北部存在轻度至中度盐渍化风险，建议及时采取土壤改良措施。'
 )
-const aiConfidenceLabel = ref('中等偏高')
+const aiConfidenceLabel = ref('高')
 
 // ─── 第二层：归因分析 ─────────────────────────────────────────────
 const activeCollapse = ref<string[]>(['attribution'])
@@ -1143,6 +1154,7 @@ const handleRefresh = () => {
   overflow-y: auto;
   overflow-x: hidden;
   padding-right: 4px; // 为滚动条留空间
+  padding-bottom: 8px;
 
   &::-webkit-scrollbar {
     width: 6px;
@@ -1341,12 +1353,11 @@ const handleRefresh = () => {
 
 // ─── AI 解读卡片
 .ai-card {
-  flex: 1;
-  min-height: 0;
+  flex-shrink: 0;
 
   :deep(.el-card__body) {
-    height: calc(100% - 60px);
-    overflow-y: auto;
+    height: auto;
+    overflow: visible;
     padding: 14px;
 
     &::-webkit-scrollbar { width: 4px; }
