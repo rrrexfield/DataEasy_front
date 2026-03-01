@@ -1,16 +1,37 @@
 <template>
   <div class="time-series-page">
-    <el-card shadow="never" style="height: 100%">
+    <el-card
+      shadow="never"
+      style="height: 100%"
+    >
       <template #header>
         <div class="card-header">
           <span>时序变化分析</span>
           <el-space>
-            <el-select v-model="selectedIndicator" placeholder="选择指标" style="width: 150px">
-              <el-option label="有机质" value="organicMatter" />
-              <el-option label="含水量" value="waterContent" />
-              <el-option label="盐渍化" value="salinization" />
+            <el-select
+              v-model="selectedIndicator"
+              placeholder="选择指标"
+              style="width: 150px"
+            >
+              <el-option
+                label="有机质"
+                value="organicMatter"
+              />
+              <el-option
+                label="含水量"
+                value="waterContent"
+              />
+              <el-option
+                label="盐渍化"
+                value="salinization"
+              />
             </el-select>
-            <el-button type="primary" :icon="DataAnalysis">分析</el-button>
+            <el-button
+              type="primary"
+              :icon="DataAnalysis"
+            >
+              分析
+            </el-button>
           </el-space>
         </div>
       </template>
@@ -20,8 +41,18 @@
         <div class="timeline-header">
           <span class="current-date">{{ currentDate }}</span>
           <el-space>
-            <el-button :icon="VideoPlay" @click="handlePlay">{{ isPlaying ? '暂停' : '播放' }}</el-button>
-            <el-button :icon="RefreshRight" @click="handleReset">重置</el-button>
+            <el-button
+              :icon="VideoPlay"
+              @click="handlePlay"
+            >
+              {{ isPlaying ? '暂停' : '播放' }}
+            </el-button>
+            <el-button
+              :icon="RefreshRight"
+              @click="handleReset"
+            >
+              重置
+            </el-button>
           </el-space>
         </div>
 
@@ -37,19 +68,32 @@
       <!-- 地图对比视图 -->
       <div class="map-comparison">
         <div class="map-item">
-          <div class="map-title">当前时间: {{ currentDate }}</div>
-          <div ref="mapContainer1" class="map-container"></div>
+          <div class="map-title">
+            当前时间: {{ currentDate }}
+          </div>
+          <div
+            ref="mapContainer1"
+            class="map-container"
+          />
         </div>
 
         <div class="map-item">
-          <div class="map-title">对比时间: {{ compareDate }}</div>
-          <div ref="mapContainer2" class="map-container"></div>
+          <div class="map-title">
+            对比时间: {{ compareDate }}
+          </div>
+          <div
+            ref="mapContainer2"
+            class="map-container"
+          />
         </div>
       </div>
 
       <!-- 趋势图表 -->
       <div class="trend-chart">
-        <div ref="chartContainer" class="chart-container"></div>
+        <div
+          ref="chartContainer"
+          class="chart-container"
+        />
       </div>
     </el-card>
   </div>
@@ -65,7 +109,7 @@ import { createLineConfig } from '@/utils/chart-config'
 const selectedIndicator = ref('organicMatter')
 const timelineIndex = ref(0)
 const isPlaying = ref(false)
-let playInterval: any = null
+let playInterval: number | null = null
 
 const mapContainer1 = ref<HTMLElement>()
 const mapContainer2 = ref<HTMLElement>()
@@ -108,7 +152,7 @@ onUnmounted(() => {
   if (lineChart) {
     lineChart.dispose()
   }
-  if (playInterval) {
+  if (playInterval !== null) {
     clearInterval(playInterval)
   }
 })
@@ -151,14 +195,17 @@ const formatTooltip = (index: number) => {
   return timelineData[index]
 }
 
-const handleTimelineChange = (value: number) => {
+const handleTimelineChange = (value: number | number[]) => {
   // 更新地图显示
-  console.log('时间轴变化:', timelineData[value])
+  const index = Array.isArray(value) ? value[0] : value
+  console.log('时间轴变化:', timelineData[index])
 }
 
 const handlePlay = () => {
   if (isPlaying.value) {
-    clearInterval(playInterval)
+    if (playInterval !== null) {
+      clearInterval(playInterval)
+    }
     isPlaying.value = false
   } else {
     isPlaying.value = true
@@ -174,7 +221,7 @@ const handlePlay = () => {
 
 const handleReset = () => {
   timelineIndex.value = 0
-  if (playInterval) {
+  if (playInterval !== null) {
     clearInterval(playInterval)
     isPlaying.value = false
   }
@@ -195,8 +242,9 @@ const handleReset = () => {
 .timeline-control {
   margin-bottom: 20px;
   padding: 20px;
-  background-color: #f5f7fa;
-  border-radius: 4px;
+  background: rgba(37, 40, 43, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
 
   .timeline-header {
     display: flex;
@@ -207,7 +255,8 @@ const handleReset = () => {
     .current-date {
       font-size: 20px;
       font-weight: 600;
-      color: #303133;
+      color: #00ffcc;
+      text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
     }
   }
 }
@@ -225,15 +274,18 @@ const handleReset = () => {
 
     .map-title {
       padding: 10px;
-      background-color: #f5f7fa;
+      background: rgba(37, 40, 43, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: none;
       text-align: center;
       font-weight: 600;
+      color: rgba(255, 255, 255, 0.9);
       border-radius: 4px 4px 0 0;
     }
 
     .map-container {
       flex: 1;
-      background-color: #1a1a1a;
+      background-color: #25282B;
       border-radius: 0 0 4px 4px;
     }
   }

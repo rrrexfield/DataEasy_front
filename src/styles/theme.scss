@@ -1,9 +1,9 @@
 /* ========== Element Plus Light 风格主题 ========== */
-/* 通过 CSS 自定义属性覆盖 Element Plus 默认主题 */
-/* 注意：variables.scss 和 mixins.scss 已通过 Vite 全局注入，无需手动导入 */
+/* 通过 CSS 自定义属性覆�?Element Plus 默认主题 */
+/* 注意：variables.scss �?mixins.scss 已通过 Vite 全局注入，无需手动导入 */
 
 :root {
-  // 主色调（霓虹青色）
+  // 主色调（霓虹青色�?
   --el-color-primary: #{$neon-cyan};
   --el-color-primary-light-3: #{lighten($neon-cyan, 10%)};
   --el-color-primary-light-5: #{lighten($neon-cyan, 15%)};
@@ -18,7 +18,7 @@
   --el-color-danger: #{$danger-color};
   --el-color-info: #{$info-color};
   
-  // 背景色（暗色模式）
+  // 背景色（暗色模式�?
   --el-bg-color: #{$bg-secondary};
   --el-bg-color-page: #{$bg-primary};
   --el-bg-color-overlay: #{$bg-overlay};
@@ -38,7 +38,7 @@
   --el-border-color-dark: #{rgba(255, 255, 255, 0.25)};
   --el-border-color-darker: #{rgba(255, 255, 255, 0.3)};
   
-  // 填充色（暗色变体）
+  // 填充色（暗色变体�?
   --el-fill-color-blank: transparent;
   --el-fill-color: #{rgba(255, 255, 255, 0.05)};
   --el-fill-color-light: #{rgba(255, 255, 255, 0.08)};
@@ -53,12 +53,12 @@
   --el-box-shadow-lighter: 0 1px 4px rgba(0, 0, 0, 0.2);
   --el-box-shadow-dark: #{$box-shadow-dark};
   
-  // 禁用状态
+  // 禁用状�?
   --el-disabled-bg-color: #{rgba(255, 255, 255, 0.05)};
   --el-disabled-text-color: #{rgba(255, 255, 255, 0.3)};
   --el-disabled-border-color: #{rgba(255, 255, 255, 0.08)};
   
-  // 遮罩层
+  // 遮罩�?
   --el-overlay-color: #{rgba(0, 0, 0, 0.7)};
   --el-overlay-color-light: #{rgba(0, 0, 0, 0.5)};
   --el-overlay-color-lighter: #{rgba(0, 0, 0, 0.3)};
@@ -74,7 +74,7 @@
 /* ========== 布局组件 ========== */
 .el-header {
   padding: 0 20px;
-  background-color: rgba(10, 10, 10, 0.8);
+  background-color: rgba(28, 31, 34, 0.8);
   backdrop-filter: blur(20px);
   box-shadow: none;
   border-bottom: 1px solid rgba($neon-cyan, 0.3);
@@ -93,7 +93,7 @@
 }
 
 .el-aside {
-  background: linear-gradient(180deg, rgba(26, 26, 26, 0.95) 0%, rgba(15, 15, 15, 0.95) 100%);
+  background: linear-gradient(180deg, rgba(37, 40, 43, 0.95) 0%, rgba(28, 31, 34, 0.95) 100%);
   transition: width 0.3s;
   border-right: 1px solid $border-dark;
 }
@@ -179,7 +179,7 @@
     }
   }
   
-  // 默认按钮：暗色边框
+  // 默认按钮：暗色边�?
   &--default {
     background-color: transparent;
     border-color: $border-dark-light;
@@ -235,7 +235,7 @@
     }
   }
   
-  // 文字按钮：保持简洁
+  // 文字按钮：保持简�?
   &--text {
     color: $neon-cyan;
     
@@ -249,7 +249,7 @@
 
 /* ========== 卡片组件 ========== */
 .el-card {
-  background: rgba(26, 26, 26, 0.8);
+  background: rgba(37, 40, 43, 0.8);
   border: 1px solid $border-dark;
   border-radius: $border-radius-large;
   backdrop-filter: blur(10px);
@@ -323,10 +323,10 @@
   }
 }
 
-/* ========== 输入框组件 ========== */
+/* ========== 输入框组�?========== */
 .el-input {
   .el-input__wrapper {
-    background-color: rgba(26, 26, 26, 0.6);
+    background-color: rgba(37, 40, 43, 0.6);
     border: 1px solid $border-dark;
     box-shadow: none;
     transition: $transition-glow;
@@ -354,7 +354,7 @@
 
 .el-textarea {
   .el-textarea__inner {
-    background-color: rgba(26, 26, 26, 0.6);
+    background-color: rgba(37, 40, 43, 0.6);
     border-color: $border-dark;
     color: $text-primary-dark;
     
@@ -376,12 +376,12 @@
 /* ========== 下拉选择组件 ========== */
 .el-select {
   .el-input .el-input__wrapper {
-    background-color: rgba(26, 26, 26, 0.6);
+    background-color: rgba(37, 40, 43, 0.6);
   }
 }
 
 .el-select-dropdown {
-  background-color: rgba(26, 26, 26, 0.95);
+  background-color: rgba(37, 40, 43, 0.95);
   border: 1px solid $border-dark-light;
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
@@ -401,9 +401,9 @@
   }
 }
 
-/* ========== 日期选择器 ========== */
+/* ========== 日期选择�?========== */
 .el-picker-panel {
-  background-color: rgba(26, 26, 26, 0.95);
+  background-color: rgba(37, 40, 43, 0.95);
   border: 1px solid $border-dark-light;
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
@@ -443,7 +443,7 @@
   }
 }
 
-/* ========== 分页器 ========== */
+/* ========== 分页�?========== */
 .el-pagination {
   .el-pager li {
     background-color: transparent;
@@ -511,7 +511,7 @@
 
 /* ========== 警告提示 ========== */
 .el-alert {
-  background-color: rgba(26, 26, 26, 0.8);
+  background-color: rgba(37, 40, 43, 0.8);
   border: 1px solid $border-dark;
   color: $text-primary-dark;
   
@@ -535,10 +535,10 @@
   }
 }
 
-/* ========== 进度条 ========== */
+/* ========== 进度�?========== */
 .el-progress {
   .el-progress-bar__outer {
-    background-color: rgba(26, 26, 26, 0.8);
+    background-color: rgba(37, 40, 43, 0.8);
     border: 1px solid $border-dark;
   }
   
@@ -570,7 +570,7 @@
 /* ========== 滑块 ========== */
 .el-slider {
   .el-slider__runway {
-    background-color: rgba(26, 26, 26, 0.8);
+    background-color: rgba(37, 40, 43, 0.8);
     border: 1px solid $border-dark;
   }
   
@@ -597,7 +597,7 @@
 
 /* ========== 弹出层通用样式 ========== */
 .el-popper {
-  background-color: rgba(26, 26, 26, 0.95);
+  background-color: rgba(37, 40, 43, 0.95);
   border: 1px solid $border-dark-light;
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
@@ -606,7 +606,7 @@
 
 /* ========== Loading 加载 ========== */
 .el-loading-mask {
-  background-color: rgba(10, 10, 10, 0.8);
+  background-color: rgba(28, 31, 34, 0.8);
   backdrop-filter: blur(5px);
 }
 
@@ -622,16 +622,16 @@
   }
 }
 
-/* ========== 空状态 ========== */
+/* ========== 空状�?========== */
 .el-empty {
   .el-empty__description {
     color: $text-secondary-dark;
   }
 }
 
-/* ========== 对话框 ========== */
+/* ========== 对话�?========== */
 .el-dialog {
-  background-color: rgba(26, 26, 26, 0.95);
+  background-color: rgba(37, 40, 43, 0.95);
   border: 1px solid $border-dark-light;
   backdrop-filter: blur(20px);
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.8);
@@ -655,7 +655,7 @@
 
 /* ========== 抽屉 ========== */
 .el-drawer {
-  background-color: rgba(26, 26, 26, 0.95);
+  background-color: rgba(37, 40, 43, 0.95);
   backdrop-filter: blur(20px);
   
   .el-drawer__header {
@@ -670,7 +670,7 @@
 
 /* ========== 工具提示 ========== */
 .el-tooltip__popper {
-  background-color: rgba(26, 26, 26, 0.95);
+  background-color: rgba(37, 40, 43, 0.95);
   border: 1px solid $border-dark-light;
   backdrop-filter: blur(10px);
   color: $text-primary-dark;
@@ -679,7 +679,7 @@
 
 /* ========== 下拉菜单 ========== */
 .el-dropdown-menu {
-  background-color: rgba(26, 26, 26, 0.95);
+  background-color: rgba(37, 40, 43, 0.95);
   border: 1px solid $border-dark-light;
   backdrop-filter: blur(10px);
   
@@ -693,7 +693,7 @@
   }
 }
 
-/* ========== 时间轴 ========== */
+/* ========== 时间�?========== */
 .el-timeline-item {
   .el-timeline-item__node {
     background-color: $neon-cyan;
@@ -709,7 +709,7 @@
   }
 }
 
-/* ========== 步骤条 ========== */
+/* ========== 步骤�?========== */
 .el-steps {
   .el-step__title {
     color: $text-regular-dark;
@@ -730,7 +730,7 @@
   }
 }
 
-/* ========== 面包屑 ========== */
+/* ========== 面包�?========== */
 .el-breadcrumb {
   .el-breadcrumb__item {
     .el-breadcrumb__inner {
@@ -751,3 +751,4 @@
     color: $text-secondary-dark;
   }
 }
+

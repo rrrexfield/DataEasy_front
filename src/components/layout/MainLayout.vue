@@ -36,14 +36,14 @@ const sidebarWidth = ref('200px')
 .layout-header {
   padding: 0;
   height: $navbar-height;
-  background-color: rgba(10, 10, 10, 0.8);
+  background-color: rgba(28, 31, 34, 0.8);
   backdrop-filter: blur(20px);
   box-shadow: none;
   border-bottom: 1px solid rgba($neon-cyan, 0.3);
   z-index: $z-index-navbar;
   position: relative;
   
-  // 底部发光线
+  // 底部发光�?
   &::after {
     content: '';
     position: absolute;
@@ -62,3 +62,4 @@ const sidebarWidth = ref('200px')
   overflow: auto;
 }
 </style>
+

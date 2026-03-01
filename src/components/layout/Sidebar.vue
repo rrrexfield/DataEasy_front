@@ -55,13 +55,16 @@ const activeMenu = computed(() => route.path)
 <style scoped lang="scss">
 .sidebar {
   height: 100%;
-  background: linear-gradient(180deg, rgba(26, 26, 26, 0.95) 0%, rgba(15, 15, 15, 0.95) 100%);
+  background: linear-gradient(180deg, rgba(37, 40, 43, 0.95) 0%, rgba(28, 31, 34, 0.95) 100%);
   border-right: 1px solid $border-dark;
+  overflow: hidden; // 侧边栏内容不需要滚动
 
   .sidebar-menu {
     border-right: none;
     height: 100%;
     background-color: transparent;
+    overflow: hidden; // 菜单不需要滚动
+    padding-top: 5px;
 
     :deep(.el-menu-item) {
       color: rgba(255, 255, 255, 0.7);
@@ -88,7 +91,7 @@ const activeMenu = computed(() => route.path)
         background-color: rgba($neon-cyan, 0.1);
         border-left: 4px solid $neon-cyan;
         box-shadow: inset -2px 0 10px rgba($neon-cyan, 0.3);
-        padding-left: 16px; // 补偿左边框
+        padding-left: 16px; // 补偿左边�?
         
         &::before {
           content: '';
@@ -110,3 +113,4 @@ const activeMenu = computed(() => route.path)
   }
 }
 </style>
+

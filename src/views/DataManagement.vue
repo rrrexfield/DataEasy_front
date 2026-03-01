@@ -10,11 +10,16 @@
 
       <!-- 查询表单 -->
       <el-form :model="queryForm" inline>
-        <el-form-item label="研究区">
-          <el-select v-model="queryForm.studyAreaId" placeholder="请选择研究区" style="width: 200px">
-            <el-option label="研究区A" value="area-a" />
-            <el-option label="研究区B" value="area-b" />
-          </el-select>
+        <el-form-item label="行政区定位">
+          <el-cascader
+            v-model="queryForm.region"
+            placeholder="选择行政区定位"
+            clearable
+            filterable
+            :options="CHINA_REGIONS as any"
+            :props="{ checkStrictly: true, expandTrigger: 'hover', value: 'value', label: 'label' }"
+            style="width: 260px"
+          />
         </el-form-item>
 
         <el-form-item label="日期范围">
@@ -73,11 +78,17 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
 import { Upload, Search, RefreshRight, View, Download, Delete } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { CHINA_REGIONS } from '@/utils/map-utils'
+import { useMapStore } from '@/stores'
+
+const router = useRouter()
+const mapStore = useMapStore()
 
 const queryForm = reactive({
-  studyAreaId: '',
+  region: [] as string[],
   dateRange: [],
 })
 
@@ -90,7 +101,15 @@ const pagination = reactive({
 const loading = ref(false)
 const tableData = ref([
   {
-    id: 'data-001',
+    id: 'e4a7b9c2f6d1',
+    name: 'DZ01V_L2_E110.3_N29.2_20251225031144_01_T1_MTL',
+    studyArea: '湖南省张家界市',
+    date: '2025-12-25',
+    type: '高光谱',
+    size: '34MB',
+  },
+  {
+    id: '9f2d4e8a1c5b',
     name: '高光谱影像数据_2024Q1',
     studyArea: '研究区A',
     date: '2024-03-15',
@@ -98,7 +117,7 @@ const tableData = ref([
     size: '125MB',
   },
   {
-    id: 'data-002',
+    id: '7c3a8d5e2f9b',
     name: '地形数据_DEM',
     studyArea: '研究区A',
     date: '2024-03-10',
@@ -129,13 +148,23 @@ const handleQuery = () => {
 }
 
 const handleReset = () => {
-  queryForm.studyAreaId = ''
+  queryForm.region = []
   queryForm.dateRange = []
   handleQuery()
 }
 
 const handleView = (row: any) => {
-  ElMessage.info(`查看数据: ${row.name}`)
+  // 如果是遥感数据，跳转到首页并定位到遥感图像
+  if (row.id === 'e4a7b9c2f6d1') {
+    // 设置地图中心和缩放级别
+    mapStore.setCenter([110.3, 29.2])
+    mapStore.setZoom(11)
+    // 跳转到首页，并显示原始RGB图像
+    router.push({ path: '/home', query: { showRGB: 'true' } })
+    ElMessage.success('正在定位到遥感影像区域...')
+  } else {
+    ElMessage.info(`查看数据: ${row.name}`)
+  }
 }
 
 const handleDownload = (row: any) => {

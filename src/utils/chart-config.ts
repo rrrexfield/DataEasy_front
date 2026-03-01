@@ -12,7 +12,7 @@ const NEON_COLORS = {
 /**
  * 仪表盘图表配置（霓虹风格）
  */
-export function createGaugeConfig(value: number, title: string): EChartsOption {
+export function createGaugeConfig(value: number, title: string, uncertainty?: number): EChartsOption {
   return {
     backgroundColor: 'transparent',
     series: [
@@ -76,14 +76,32 @@ export function createGaugeConfig(value: number, title: string): EChartsOption {
           color: 'rgba(255, 255, 255, 0.8)',
         },
         detail: {
-          fontSize: 36,
           offsetCenter: [0, '-35%'],
           valueAnimation: true,
-          formatter: '{value}',
-          color: NEON_COLORS.cyan,
-          textShadowBlur: 20,
-          textShadowColor: 'rgba(0, 255, 204, 0.8)',
-          fontWeight: 'bold',
+          formatter: (value: number) => {
+            if (uncertainty !== undefined) {
+              return `{main|${value}}  {uncertainty| ±${uncertainty}}`
+            }
+            return `{main|${value}}`
+          },
+          rich: {
+            main: {
+              fontSize: 32,
+              color: NEON_COLORS.cyan,
+              fontWeight: 'bold',
+              textShadowBlur: 20,
+              textShadowColor: 'rgba(0, 255, 204, 0.8)',
+            },
+            uncertainty: {
+              fontSize: 15,
+              color: '#95d475',
+              borderColor: '#95d475',
+              borderWidth: 1,
+              borderRadius: 4,
+              padding: [2, 6],
+              align: 'center',
+            },
+          },
         },
         data: [
           {

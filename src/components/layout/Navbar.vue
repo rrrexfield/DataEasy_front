@@ -2,8 +2,8 @@
   <div class="navbar">
     <div class="navbar-left">
       <h1 class="app-title">
-        <el-icon><Odometer /></el-icon>
-        DataEasy 土壤质量智能监测平台
+        <img src="/Dataeasy.png" alt="DataEasy Logo" class="app-logo">
+        土壤质量智能监测平台
       </h1>
     </div>
 
@@ -23,6 +23,28 @@
 
         <el-button type="primary" :icon="Download" @click="handleExport">导出</el-button>
         <el-button :icon="QuestionFilled" circle @click="handleHelp" />
+        
+        <!-- 用户下拉菜单 -->
+        <el-dropdown @command="handleCommand">
+          <div class="user-info">
+            <el-avatar :size="32" :icon="UserFilled" />
+            <span class="username">{{ authStore.userInfo?.username || '用户' }}</span>
+            <el-icon class="el-icon--right"><ArrowDown /></el-icon>
+          </div>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item :icon="User" disabled>
+                {{ authStore.userInfo?.email || '未设置邮箱' }}
+              </el-dropdown-item>
+              <el-dropdown-item divided :icon="Setting" command="settings">
+                个人设置
+              </el-dropdown-item>
+              <el-dropdown-item :icon="SwitchButton" command="logout">
+                退出登录
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </el-space>
     </div>
   </div>
@@ -30,26 +52,32 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import {
-  Odometer,
   FolderOpened,
   Connection,
   Download,
   QuestionFilled,
+  UserFilled,
+  ArrowDown,
+  User,
+  Setting,
+  SwitchButton,
 } from '@element-plus/icons-vue'
-import { ElMessage } from 'element-plus'
-import { useDataStore } from '@/stores'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { useDataStore, useAuthStore } from '@/stores'
 
+const router = useRouter()
 const dataStore = useDataStore()
+const authStore = useAuthStore()
 
 // 数据状态
 const dataStatus = computed(() => {
   if (dataStore.isLoading) {
     return { type: 'warning', text: '加载中' }
   }
-  return dataStore.hasData
-    ? { type: 'success', text: '已就绪' }
-    : { type: 'info', text: '无数据' }
+  // 默认显示云端数据状态
+  return { type: 'success', text: '云端数据' }
 })
 
 // AI 状态
@@ -61,6 +89,25 @@ const handleExport = () => {
 
 const handleHelp = () => {
   ElMessage.info('帮助文档开发中...')
+}
+
+// 处理下拉菜单命令
+const handleCommand = (command: string) => {
+  if (command === 'logout') {
+    ElMessageBox.confirm('确定要退出登录吗？', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+    }).then(() => {
+      authStore.logout()
+      ElMessage.success('已退出登录')
+      router.push('/login')
+    }).catch(() => {
+      // 取消操作
+    })
+  } else if (command === 'settings') {
+    ElMessage.info('个人设置功能开发中...')
+  }
 }
 </script>
 
@@ -85,18 +132,18 @@ const handleHelp = () => {
     @include text-glow($neon-cyan, low);
     transition: $transition-glow;
 
-    .el-icon {
-      font-size: 28px;
-      color: $neon-cyan;
-      filter: drop-shadow(0 0 8px rgba($neon-cyan, 0.8));
-      animation: glow-pulse 2s ease-in-out infinite;
+    .app-logo {
+      height: 46px;
+      width: auto;
+      object-fit: contain;
+      transition: all 0.3s ease;
     }
     
     &:hover {
       @include text-glow($neon-cyan, medium);
       
-      .el-icon {
-        filter: drop-shadow(0 0 12px rgba($neon-cyan, 1));
+      .app-logo {
+        transform: scale(1.05);
       }
     }
   }
@@ -136,6 +183,35 @@ const handleHelp = () => {
         border-color: $info-color;
         box-shadow: 0 0 5px rgba($info-color, 0.3);
       }
+    }
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 12px 4px 4px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba($neon-cyan, 0.2);
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba($neon-cyan, 0.4);
+      box-shadow: 0 0 10px rgba($neon-cyan, 0.2);
+    }
+
+    .username {
+      font-size: 14px;
+      color: $text-primary-dark;
+      font-weight: 500;
+    }
+
+    .el-icon--right {
+      font-size: 12px;
+      color: $text-secondary-dark;
     }
   }
   

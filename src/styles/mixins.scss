@@ -71,7 +71,7 @@
 
 // ========== 发光卡片 ==========
 // 卡片容器：暗色背景 + 微弱边框光 + 内阴影
-@mixin glow-card($bg: rgba(26, 26, 26, 0.8), $border-color: rgba(255, 255, 255, 0.1)) {
+@mixin glow-card($bg: rgba(37, 40, 43, 0.8), $border-color: rgba(255, 255, 255, 0.1)) {
   background: $bg;
   border: 1px solid $border-color;
   border-radius: 8px;
@@ -103,7 +103,7 @@
 }
 
 // ========== 聚光灯效果 ==========
-// 鼠标跟随的径向渐变光源
+// 鼠标跟随的径向渐变光效
 @mixin spotlight-effect($radius: 600px, $intensity: 0.1) {
   position: relative;
   
@@ -222,3 +222,4 @@
     transition: none !important;
   }
 }
+

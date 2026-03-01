@@ -8,6 +8,30 @@
             <div class="card-header">
               <span>研究区地图</span>
               <div class="header-actions">
+                <!-- 选择已反演数据 -->
+                <el-select
+                  v-model="selectedDataId"
+                  placeholder="选择已反演数据"
+                  size="small"
+                  clearable
+                  filterable
+                  class="data-select"
+                  popper-class="data-select-popper"
+                  @change="handleDataSelect"
+                  @clear="handleDataClear"
+                >
+                  <el-option
+                    v-for="item in inversionDataList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
+                  >
+                    <div class="data-option">
+                      <div class="data-name">{{ item.name }}</div>
+                      <div class="data-id">ID: {{ item.id }}</div>
+                    </div>
+                  </el-option>
+                </el-select>
                 <!-- 行政区快速定位 -->
                 <el-cascader
                   v-model="selectedRegion"
@@ -102,7 +126,7 @@
             <div ref="mapContainer" class="map-container"></div>
 
             <!-- 高风险区域标注覆盖层 -->
-            <div v-if="showWarningOverlay" class="map-overlay">
+            <div v-if="showWarningOverlay && hasSelectedData" class="map-overlay">
               <div
                 v-for="zone in riskZones"
                 :key="zone.id"
@@ -123,7 +147,7 @@
             </div>
 
             <!-- 顶部警告横幅 -->
-            <div class="map-alert-banner">
+            <div v-if="hasSelectedData" class="map-alert-banner">
               <el-icon class="alert-icon"><Warning /></el-icon>
               <span>发现 <strong>{{ reviewZoneCount }} 处</strong>高风险区域 → 建议优先关注</span>
             </div>
@@ -135,6 +159,24 @@
       <el-col :span="8">
         <div class="right-panel">
 
+          <!-- 暂无数据提示 -->
+          <div v-if="!hasSelectedData" class="no-data-placeholder">
+            <el-empty description="暂无研究结果">
+              <template #image>
+                <el-icon :size="80" color="#606266">
+                  <FolderOpened />
+                </el-icon>
+              </template>
+              <template #description>
+                <p class="empty-title">暂无研究结果</p>
+                <p class="empty-hint">请从地图顶栏选择已反演数据以查看分析结果</p>
+              </template>
+            </el-empty>
+          </div>
+
+          <!-- 有数据时显示结果 -->
+          <template v-else>
+
           <!-- ① 综合指数 + 不确定性可视化 -->
           <el-card class="index-card" shadow="never">
             <template #header>
@@ -143,13 +185,6 @@
             <div class="index-body">
               <!-- 指数数值 + 可信度 -->
               <div class="index-stats">
-                <div class="index-main">
-                  <span class="index-label">综合指数</span>
-                  <span class="index-value">{{ soilIndex.value }}</span>
-                  <el-tag class="confidence-tag" :type="soilIndex.confidenceType" size="small">
-                    ±{{ soilIndex.uncertainty }}
-                  </el-tag>
-                </div>
                 <div class="index-sub-row">
                   <span class="sub-label">有机质含量</span>
                   <span class="sub-value">{{ soilIndex.organicMatter }}%</span>
@@ -331,6 +366,8 @@
             </div>
           </el-card>
 
+          </template>
+
         </div>
       </el-col>
     </el-row>
@@ -338,7 +375,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { useRoute } from 'vue-router'
 import {
   ZoomIn, ZoomOut, RefreshRight, CircleCheck,
   Warning, DataAnalysis, Select, MapLocation,
@@ -359,12 +397,90 @@ import { createGaugeConfig } from '@/utils/chart-config'
 import { useMapStore } from '@/stores'
 import { parseMTLFile, type ImageMetadata } from '@/utils/metadata-parser'
 
+const route = useRoute()
 const mapStore = useMapStore()
 
 const mapContainer = ref<HTMLElement>()
 const gaugeContainer = ref<HTMLElement>()
 let map: any = null
 let gaugeChart: echarts.ECharts | null = null
+
+// ─── 数据选择 ───────────────────────────────────────────────
+const selectedDataId = ref<string | null>(null)
+const hasSelectedData = computed(() => !!selectedDataId.value)
+
+// 可选的反演数据列表（从数据管理页面获取）
+const inversionDataList = ref([
+  {
+    id: 'e4a7b9c2f6d1',
+    name: 'DZ01V_L2_E110.3_N29.2_20251225031144_01_T1_MTL',
+    studyArea: '湖南省张家界市',
+    date: '2025-12-25',
+    type: '高光谱',
+    size: '34MB',
+  },
+  {
+    id: '9f2d4e8a1c5b',
+    name: '高光谱影像数据_2024Q1',
+    studyArea: '研究区A',
+    date: '2024-03-15',
+    type: '高光谱',
+    size: '125MB',
+  },
+  {
+    id: '7c3a8d5e2f9b',
+    name: '地形数据_DEM',
+    studyArea: '研究区A',
+    date: '2024-03-10',
+    type: '地形',
+    size: '45MB',
+  },
+])
+
+const handleDataSelect = async (dataId: string | null | undefined) => {
+  // 处理清除或未定义的情况
+  if (!dataId) {
+    clearDataAndLayers()
+    return
+  }
+  
+  // 选择了数据，加载遥感图像和分析结果
+  await loadRemoteSensingData()
+  // 等待 DOM 更新后初始化仪表盘
+  await nextTick()
+  initGaugeChart()
+  ElMessage.success('研究结果加载成功')
+}
+
+const handleDataClear = async () => {
+  // 明确清除选择
+  selectedDataId.value = null
+  // 等待 Vue 更新
+  await nextTick()
+  clearDataAndLayers()
+}
+
+const clearDataAndLayers = () => {
+  // 清除所有图层
+  clearAllLayers()
+  // 清除仪表盘
+  if (gaugeChart) {
+    gaugeChart.dispose()
+    gaugeChart = null
+  }
+  ElMessage.info('已清除研究结果')
+}
+
+const clearAllLayers = () => {
+  // 清除所有图层
+  imageLayers.value.forEach(layer => {
+    if (layer.layer) {
+      layer.layer.setVisible(false)
+      layer.visible = false
+    }
+  })
+}
+
 // ─── 图层管理 ───────────────────────────────
 interface ImageLayerConfig {
   id: string
@@ -681,8 +797,13 @@ const updateRiskZonePositions = () => {
 // ─── 地图与图表初始化 ─────────────────────────────────────────────
 onMounted(async () => {
   await initMap()
-  initGaugeChart()
-  await loadRemoteSensingData()
+  // 仪表盘在选择数据后才初始化
+  // 检查是否从数据管理页面跳转过来
+  if (route.query.showRGB === 'true' && inversionDataList.value.length > 0) {
+    // 自动选择第一个数据
+    selectedDataId.value = inversionDataList.value[0].id
+    await handleDataSelect(selectedDataId.value)
+  }
 })
 
 onUnmounted(() => {
@@ -707,6 +828,10 @@ const initMap = async () => {
 
 // ─── 加载遥感数据 ─────────────────────────────────────────────────
 const loadRemoteSensingData = async () => {
+  if (!hasSelectedData.value) {
+    return
+  }
+  
   try {
     // 加载元数据
     const mtlUrl = '/demo_bundle/DZ01V_L2_E110.3_N29.2_20251225031144_01_T1_MTL.txt'
@@ -728,14 +853,26 @@ const loadRemoteSensingData = async () => {
         { zoom: 11, duration: 1000 }
       )
       
-      // 初始化默认显示的图层
-      imageLayers.value.forEach(layer => {
-        if (layer.visible) {
-          toggleLayer(layer)
-        }
-      })
+      // 检查路由参数，决定显示哪些图层
+      const showRGB = route.query.showRGB === 'true'
       
-      ElMessage.success('遥感图层加载成功')
+      if (showRGB) {
+        // 从数据管理页面跳转，显示原始RGB图像
+        const rgbLayer = imageLayers.value.find(layer => layer.id === 'raw_rgb')
+        if (rgbLayer) {
+          rgbLayer.visible = true
+          toggleLayer(rgbLayer)
+        }
+      } else {
+        // 正常初始化，显示默认图层
+        imageLayers.value.forEach(layer => {
+          if (layer.visible) {
+            toggleLayer(layer)
+          }
+        })
+      }
+      
+      // ElMessage 移到 handleDataSelect 中统一显示
     }
   } catch (error) {
     console.error('加载遥感数据失败:', error)
@@ -748,7 +885,7 @@ const handleResize = () => gaugeChart?.resize()
 const initGaugeChart = () => {
   if (gaugeContainer.value) {
     gaugeChart = echarts.init(gaugeContainer.value)
-    const option = createGaugeConfig(soilIndex.value.value, '综合指数')
+    const option = createGaugeConfig(soilIndex.value.value, '综合指数', soilIndex.value.uncertainty)
     gaugeChart.setOption(option)
     window.addEventListener('resize', handleResize)
   }
@@ -774,6 +911,18 @@ const handleRefresh = () => {
   }
 }
 </script>
+
+<style lang="scss">
+// 数据选择器下拉框全局样式（不能用scoped，否则会被限制作用域）
+.data-select-popper {
+  .el-select-dropdown__item {
+    height: auto !important;
+    min-height: 65px !important;
+    padding: 10px 20px !important;
+    line-height: 1.4 !important;
+  }
+}
+</style>
 
 <style scoped lang="scss">
 // ═══════════════════════════════════════════════
@@ -822,6 +971,83 @@ const handleRefresh = () => {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+// 数据选择框样式 + 内发光效果
+.data-select {
+  width: 280px;
+
+  :deep(.el-input__wrapper) {
+    background: rgba($neon-purple, 0.08);
+    border: 1.5px solid rgba($neon-purple, 0.55);
+    box-shadow: 
+      0 0 8px rgba($neon-purple, 0.2),
+      inset 0 0 12px rgba($neon-purple, 0.15) !important;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      border-color: $neon-purple;
+      box-shadow: 
+        0 0 12px rgba($neon-purple, 0.4),
+        inset 0 0 16px rgba($neon-purple, 0.25) !important;
+      background: rgba($neon-purple, 0.12);
+    }
+
+    &.is-focus {
+      border-color: $neon-purple;
+      box-shadow: 
+        0 0 16px rgba($neon-purple, 0.5),
+        inset 0 0 20px rgba($neon-purple, 0.3) !important;
+      background: rgba($neon-purple, 0.12);
+    }
+  }
+
+  :deep(.el-input__inner) {
+    color: $neon-purple;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+
+    &::placeholder {
+      color: rgba($neon-purple, 0.55);
+    }
+  }
+
+  :deep(.el-icon) {
+    color: $neon-purple;
+    filter: drop-shadow(0 0 4px rgba($neon-purple, 0.8));
+  }
+}
+
+// 数据选项样式
+.data-option {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px 0;
+
+  .data-name {
+    font-size: 16px;
+    color: $text-primary-dark;
+    font-weight: 500;
+    line-height: 1.5;
+    margin-bottom: 2px;
+  }
+
+  .data-id {
+    display: inline-block;
+    font-size: 12px;
+    color: $success-color;
+    background: rgba($success-color, 0.1);
+    border: 1px solid rgba($success-color, 0.3);
+    border-radius: 4px;
+    padding: 3px 10px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    letter-spacing: 0.5px;
+    width: fit-content;
+    line-height: 1.3;
+  }
 }
 
 // 行政区级联选择框样式 + 内发光效果
@@ -897,7 +1123,7 @@ const handleRefresh = () => {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(10, 10, 10, 0.85);
+  background: rgba(28, 31, 34, 0.85);
   border: 1px solid rgba($neon-orange, 0.6);
   border-radius: 20px;
   padding: 6px 16px;
@@ -1031,7 +1257,7 @@ const handleRefresh = () => {
     position: absolute;
     left: 24px;
     top: -8px;
-    background: rgba(15, 15, 15, 0.95);
+    background: rgba(28, 31, 34, 0.95);
     border: 1px solid $border-dark-light;
     border-radius: $border-radius-large;
     padding: 10px 14px;
@@ -1173,12 +1399,40 @@ const handleRefresh = () => {
   }
 }
 
+// ─── 暂无数据占位
+.no-data-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 400px;
+
+  :deep(.el-empty) {
+    padding: 40px 20px;
+  }
+
+  .empty-title {
+    font-size: 20px;
+    color: $text-primary-dark;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .empty-hint {
+    font-size: 16px;
+    color: $text-secondary-dark;
+    line-height: 1.6;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+}
+
 // ─── 综合指数卡片
 .index-card {
   flex-shrink: 0;
 
   :deep(.el-card__body) {
-    background: radial-gradient(circle at center, rgba(26, 26, 26, 0.8), rgba(15, 15, 15, 0.95));
+    background: radial-gradient(circle at center, rgba(37, 40, 43, 0.8), rgba(28, 31, 34, 0.95));
     padding: 14px;
   }
 }
@@ -1238,15 +1492,20 @@ const handleRefresh = () => {
 
 .confidence-bar-wrap {
   margin-top: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 
   .confidence-label {
-    font-size: 12px;
+    font-size: 16px;
     color: $text-secondary-dark;
-    display: block;
-    margin-bottom: 4px;
+    white-space: nowrap;
   }
 
   .confidence-progress {
+    flex: 1;
+    
     :deep(.el-progress-bar__outer) {
       background: rgba(255, 255, 255, 0.08);
     }
@@ -1379,7 +1638,7 @@ const handleRefresh = () => {
 
 // 自然语言块
 .ai-nl-block {
-  background: rgba(26, 26, 26, 0.8);
+  background: rgba(37, 40, 43, 0.8);
   border: 1px solid $border-dark;
   border-left: 3px solid $neon-purple;
   border-radius: $border-radius-base;
@@ -1406,7 +1665,7 @@ const handleRefresh = () => {
   overflow: hidden;
 
   :deep(.el-collapse-item__header) {
-    background: rgba(26, 26, 26, 0.6);
+    background: rgba(37, 40, 43, 0.6);
     color: $text-primary-dark;
     border-bottom: 1px solid $border-dark;
     font-size: 13px;
@@ -1418,7 +1677,7 @@ const handleRefresh = () => {
   }
 
   :deep(.el-collapse-item__content) {
-    background: rgba(15, 15, 15, 0.6);
+    background: rgba(28, 31, 34, 0.6);
     padding: 10px 12px;
   }
 
@@ -1563,7 +1822,7 @@ const handleRefresh = () => {
   align-items: center;
   justify-content: space-between;
   padding: 8px 10px;
-  background: rgba(26, 26, 26, 0.6);
+  background: rgba(37, 40, 43, 0.6);
   border: 1px solid $border-dark;
   border-radius: $border-radius-base;
 }

@@ -8,3 +8,4 @@ export default pinia
 export { useMapStore } from './map'
 export { useDataStore } from './data'
 export { useAIStore } from './ai'
+export { useAuthStore } from './auth'
