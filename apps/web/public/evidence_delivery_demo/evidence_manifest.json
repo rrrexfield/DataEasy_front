@@ -1,0 +1,870 @@
+{
+  "created_at": "2026-03-05T07:44:59.807740+00:00",
+  "target_filter": "",
+  "target_filters": [
+    "TN",
+    "OC"
+  ],
+  "layers": [
+    {
+      "id": "pred_OC_0-5cm_1km_mean",
+      "label": "pred_OC_0-5cm_1km_mean",
+      "type": "raster",
+      "role": "prediction",
+      "path": "rasters/pred_OC_0-5cm_1km_mean.tif",
+      "legend": {
+        "type": "continuous",
+        "palette": [
+          "#17324d",
+          "#2f6ea6",
+          "#7fc8f8",
+          "#f9e27d"
+        ],
+        "vmin": 1.2900771915912628,
+        "vmax": 3.238222432136536,
+        "ticks": [
+          1.2900771915912628,
+          1.5720919370651245,
+          3.238222432136536
+        ]
+      },
+      "stats": {
+        "min": 1.0699129104614258,
+        "max": 4.4354567527771,
+        "mean": 1.757327288063495,
+        "std": 0.5635430135106011,
+        "p05": 1.2900771915912628,
+        "p50": 1.5720919370651245,
+        "p95": 3.238222432136536,
+        "count": 11978538.0
+      }
+    },
+    {
+      "id": "pred_TN_0-5cm_1km_mean",
+      "label": "pred_TN_0-5cm_1km_mean",
+      "type": "raster",
+      "role": "prediction",
+      "path": "rasters/pred_TN_0-5cm_1km_mean.tif",
+      "legend": {
+        "type": "continuous",
+        "palette": [
+          "#17324d",
+          "#2f6ea6",
+          "#7fc8f8",
+          "#f9e27d"
+        ],
+        "vmin": 0.12581266462802887,
+        "vmax": 0.25895286053419114,
+        "ticks": [
+          0.12581266462802887,
+          0.14789581298828125,
+          0.25895286053419114
+        ]
+      },
+      "stats": {
+        "min": 0.1039641872048378,
+        "max": 0.3354884088039398,
+        "mean": 0.1605162251334576,
+        "std": 0.038684650766731825,
+        "p05": 0.12581266462802887,
+        "p50": 0.14789581298828125,
+        "p95": 0.25895286053419114,
+        "count": 11978538.0
+      }
+    },
+    {
+      "id": "unc_OC_0-5cm_1km_mean",
+      "label": "unc_OC_0-5cm_1km_mean",
+      "type": "raster",
+      "role": "uncertainty",
+      "path": "rasters/unc_OC_0-5cm_1km_mean.tif",
+      "legend": {
+        "type": "continuous",
+        "palette": [
+          "#f3f4f6",
+          "#cbd5e1",
+          "#64748b",
+          "#1e3a8a"
+        ],
+        "vmin": 0.0,
+        "vmax": 0.1685468278825283,
+        "ticks": [
+          0.0,
+          0.04472570866346359,
+          0.1685468278825283
+        ]
+      },
+      "stats": {
+        "min": 1.0902057510975283e-05,
+        "max": 0.676633894443512,
+        "mean": 0.06040484539137259,
+        "std": 0.051325215776955375,
+        "p05": 0.011473171366378664,
+        "p50": 0.04472570866346359,
+        "p95": 0.1685468278825283,
+        "count": 11978538.0
+      }
+    },
+    {
+      "id": "unc_TN_0-5cm_1km_mean",
+      "label": "unc_TN_0-5cm_1km_mean",
+      "type": "raster",
+      "role": "uncertainty",
+      "path": "rasters/unc_TN_0-5cm_1km_mean.tif",
+      "legend": {
+        "type": "continuous",
+        "palette": [
+          "#f3f4f6",
+          "#cbd5e1",
+          "#64748b",
+          "#1e3a8a"
+        ],
+        "vmin": 0.0,
+        "vmax": 0.011103301448747516,
+        "ticks": [
+          0.0,
+          0.0032285309862345457,
+          0.011103301448747516
+        ]
+      },
+      "stats": {
+        "min": 1.7922738493325596e-07,
+        "max": 0.04809682071208954,
+        "mean": 0.004209469550451959,
+        "std": 0.0034220336756796764,
+        "p05": 0.0007705618627369404,
+        "p50": 0.0032285309862345457,
+        "p95": 0.011103301448747516,
+        "count": 11978538.0
+      }
+    },
+    {
+      "id": "explain_top1_factor_TN_0-5cm_1km_mean",
+      "label": "explain_top1_factor_TN_0-5cm_1km_mean",
+      "type": "raster",
+      "role": "categorical_factor",
+      "path": "rasters/explain_top1_factor_TN_0-5cm_1km_mean.tif",
+      "legend": {
+        "type": "categorical",
+        "palette": [
+          "#1d4ed8",
+          "#2563eb",
+          "#0891b2",
+          "#0f766e",
+          "#65a30d",
+          "#ca8a04",
+          "#ea580c",
+          "#dc2626"
+        ],
+        "categories": [
+          {
+            "value": 1,
+            "label": "band_1"
+          },
+          {
+            "value": 2,
+            "label": "band_2"
+          },
+          {
+            "value": 3,
+            "label": "band_3"
+          },
+          {
+            "value": 4,
+            "label": "band_4"
+          },
+          {
+            "value": 5,
+            "label": "band_5"
+          },
+          {
+            "value": 6,
+            "label": "band_6"
+          },
+          {
+            "value": 7,
+            "label": "band_7"
+          },
+          {
+            "value": 8,
+            "label": "band_8"
+          },
+          {
+            "value": 9,
+            "label": "band_9"
+          },
+          {
+            "value": 10,
+            "label": "band_10"
+          },
+          {
+            "value": 11,
+            "label": "band_11"
+          },
+          {
+            "value": 12,
+            "label": "band_12"
+          },
+          {
+            "value": 13,
+            "label": "band_13"
+          },
+          {
+            "value": 14,
+            "label": "band_14"
+          },
+          {
+            "value": 15,
+            "label": "band_15"
+          },
+          {
+            "value": 16,
+            "label": "band_16"
+          },
+          {
+            "value": 17,
+            "label": "ndvi"
+          },
+          {
+            "value": 18,
+            "label": "gndvi"
+          },
+          {
+            "value": 19,
+            "label": "ndre"
+          },
+          {
+            "value": 20,
+            "label": "evi"
+          },
+          {
+            "value": 21,
+            "label": "savi"
+          },
+          {
+            "value": 22,
+            "label": "nir_red_ratio"
+          },
+          {
+            "value": 23,
+            "label": "red_green_ratio"
+          },
+          {
+            "value": 24,
+            "label": "brightness"
+          },
+          {
+            "value": 25,
+            "label": "red_edge_diff"
+          },
+          {
+            "value": 26,
+            "label": "covgtiff_sand_0_5cm_1km_mean"
+          },
+          {
+            "value": 27,
+            "label": "covgtiff_silt_0_5cm_1km_mean"
+          },
+          {
+            "value": 28,
+            "label": "covgtiff_gravel_0_5cm_1km_mean"
+          },
+          {
+            "value": 29,
+            "label": "covgtiff_dry_r_0_5cm_1km_mean"
+          },
+          {
+            "value": 30,
+            "label": "covgtiff_dry_g_0_5cm_1km_mean"
+          },
+          {
+            "value": 31,
+            "label": "covgtiff_dry_b_0_5cm_1km_mean"
+          },
+          {
+            "value": 32,
+            "label": "covgtiff_dry_value_0_5cm_1km_mean"
+          },
+          {
+            "value": 33,
+            "label": "covgtiff_wet_r_0_5cm_1km_mean"
+          },
+          {
+            "value": 34,
+            "label": "covgtiff_wet_g_0_5cm_1km_mean"
+          },
+          {
+            "value": 35,
+            "label": "covgtiff_wet_b_0_5cm_1km_mean"
+          },
+          {
+            "value": 36,
+            "label": "covgtiff_wet_value_0_5cm_1km_mean"
+          },
+          {
+            "value": 37,
+            "label": "climate_bio1"
+          },
+          {
+            "value": 38,
+            "label": "climate_bio4"
+          },
+          {
+            "value": 39,
+            "label": "climate_bio12"
+          },
+          {
+            "value": 40,
+            "label": "climate_bio15"
+          },
+          {
+            "value": 41,
+            "label": "land_type"
+          },
+          {
+            "value": 42,
+            "label": "terrain_dem"
+          },
+          {
+            "value": 43,
+            "label": "terrain_relief"
+          },
+          {
+            "value": 44,
+            "label": "terrain_slope"
+          },
+          {
+            "value": 45,
+            "label": "terrain_tpi"
+          },
+          {
+            "value": 46,
+            "label": "terrain_patch_r-2_c-2"
+          },
+          {
+            "value": 47,
+            "label": "terrain_patch_r-2_c-1"
+          },
+          {
+            "value": 48,
+            "label": "terrain_patch_r-2_c0"
+          },
+          {
+            "value": 49,
+            "label": "terrain_patch_r-2_c1"
+          },
+          {
+            "value": 50,
+            "label": "terrain_patch_r-2_c2"
+          },
+          {
+            "value": 51,
+            "label": "terrain_patch_r-1_c-2"
+          },
+          {
+            "value": 52,
+            "label": "terrain_patch_r-1_c-1"
+          },
+          {
+            "value": 53,
+            "label": "terrain_patch_r-1_c0"
+          },
+          {
+            "value": 54,
+            "label": "terrain_patch_r-1_c1"
+          },
+          {
+            "value": 55,
+            "label": "terrain_patch_r-1_c2"
+          },
+          {
+            "value": 56,
+            "label": "terrain_patch_r0_c-2"
+          },
+          {
+            "value": 57,
+            "label": "terrain_patch_r0_c-1"
+          },
+          {
+            "value": 58,
+            "label": "terrain_patch_r0_c0"
+          },
+          {
+            "value": 59,
+            "label": "terrain_patch_r0_c1"
+          },
+          {
+            "value": 60,
+            "label": "terrain_patch_r0_c2"
+          },
+          {
+            "value": 61,
+            "label": "terrain_patch_r1_c-2"
+          },
+          {
+            "value": 62,
+            "label": "terrain_patch_r1_c-1"
+          },
+          {
+            "value": 63,
+            "label": "terrain_patch_r1_c0"
+          },
+          {
+            "value": 64,
+            "label": "terrain_patch_r1_c1"
+          },
+          {
+            "value": 65,
+            "label": "terrain_patch_r1_c2"
+          },
+          {
+            "value": 66,
+            "label": "terrain_patch_r2_c-2"
+          },
+          {
+            "value": 67,
+            "label": "terrain_patch_r2_c-1"
+          },
+          {
+            "value": 68,
+            "label": "terrain_patch_r2_c0"
+          },
+          {
+            "value": 69,
+            "label": "terrain_patch_r2_c1"
+          },
+          {
+            "value": 70,
+            "label": "terrain_patch_r2_c2"
+          }
+        ]
+      },
+      "stats": {
+        "min": 1.0,
+        "max": 16.0,
+        "mean": 8.622907319741357,
+        "std": 5.545940397379178,
+        "p05": 2.0,
+        "p50": 8.0,
+        "p95": 16.0,
+        "count": 11978538.0
+      }
+    },
+    {
+      "id": "explain_top1_strength_TN_0-5cm_1km_mean",
+      "label": "explain_top1_strength_TN_0-5cm_1km_mean",
+      "type": "raster",
+      "role": "strength",
+      "path": "rasters/explain_top1_strength_TN_0-5cm_1km_mean.tif",
+      "legend": {
+        "type": "continuous",
+        "palette": [
+          "#f3f4f6",
+          "#cbd5e1",
+          "#64748b",
+          "#1e3a8a"
+        ],
+        "vmin": 0.0,
+        "vmax": 0.20088506862521174,
+        "ticks": [
+          0.0,
+          -0.10428258404135704,
+          0.20088506862521174
+        ]
+      },
+      "stats": {
+        "min": -0.6191116571426392,
+        "max": 1.0502699613571167,
+        "mean": -0.06758221321694548,
+        "std": 0.16202548985124338,
+        "p05": -0.29448713213205335,
+        "p50": -0.10428258404135704,
+        "p95": 0.20088506862521174,
+        "count": 11978538.0
+      }
+    },
+    {
+      "id": "explain_top1_factor_OC_0-5cm_1km_mean",
+      "label": "explain_top1_factor_OC_0-5cm_1km_mean",
+      "type": "raster",
+      "role": "categorical_factor",
+      "path": "rasters/explain_top1_factor_OC_0-5cm_1km_mean.tif",
+      "legend": {
+        "type": "categorical",
+        "palette": [
+          "#1d4ed8",
+          "#2563eb",
+          "#0891b2",
+          "#0f766e",
+          "#65a30d",
+          "#ca8a04",
+          "#ea580c",
+          "#dc2626"
+        ],
+        "categories": [
+          {
+            "value": 1,
+            "label": "band_1"
+          },
+          {
+            "value": 2,
+            "label": "band_2"
+          },
+          {
+            "value": 3,
+            "label": "band_3"
+          },
+          {
+            "value": 4,
+            "label": "band_4"
+          },
+          {
+            "value": 5,
+            "label": "band_5"
+          },
+          {
+            "value": 6,
+            "label": "band_6"
+          },
+          {
+            "value": 7,
+            "label": "band_7"
+          },
+          {
+            "value": 8,
+            "label": "band_8"
+          },
+          {
+            "value": 9,
+            "label": "band_9"
+          },
+          {
+            "value": 10,
+            "label": "band_10"
+          },
+          {
+            "value": 11,
+            "label": "band_11"
+          },
+          {
+            "value": 12,
+            "label": "band_12"
+          },
+          {
+            "value": 13,
+            "label": "band_13"
+          },
+          {
+            "value": 14,
+            "label": "band_14"
+          },
+          {
+            "value": 15,
+            "label": "band_15"
+          },
+          {
+            "value": 16,
+            "label": "band_16"
+          },
+          {
+            "value": 17,
+            "label": "ndvi"
+          },
+          {
+            "value": 18,
+            "label": "gndvi"
+          },
+          {
+            "value": 19,
+            "label": "ndre"
+          },
+          {
+            "value": 20,
+            "label": "evi"
+          },
+          {
+            "value": 21,
+            "label": "savi"
+          },
+          {
+            "value": 22,
+            "label": "nir_red_ratio"
+          },
+          {
+            "value": 23,
+            "label": "red_green_ratio"
+          },
+          {
+            "value": 24,
+            "label": "brightness"
+          },
+          {
+            "value": 25,
+            "label": "red_edge_diff"
+          },
+          {
+            "value": 26,
+            "label": "covgtiff_sand_0_5cm_1km_mean"
+          },
+          {
+            "value": 27,
+            "label": "covgtiff_silt_0_5cm_1km_mean"
+          },
+          {
+            "value": 28,
+            "label": "covgtiff_gravel_0_5cm_1km_mean"
+          },
+          {
+            "value": 29,
+            "label": "covgtiff_dry_r_0_5cm_1km_mean"
+          },
+          {
+            "value": 30,
+            "label": "covgtiff_dry_g_0_5cm_1km_mean"
+          },
+          {
+            "value": 31,
+            "label": "covgtiff_dry_b_0_5cm_1km_mean"
+          },
+          {
+            "value": 32,
+            "label": "covgtiff_dry_value_0_5cm_1km_mean"
+          },
+          {
+            "value": 33,
+            "label": "covgtiff_wet_r_0_5cm_1km_mean"
+          },
+          {
+            "value": 34,
+            "label": "covgtiff_wet_g_0_5cm_1km_mean"
+          },
+          {
+            "value": 35,
+            "label": "covgtiff_wet_b_0_5cm_1km_mean"
+          },
+          {
+            "value": 36,
+            "label": "covgtiff_wet_value_0_5cm_1km_mean"
+          },
+          {
+            "value": 37,
+            "label": "climate_bio1"
+          },
+          {
+            "value": 38,
+            "label": "climate_bio4"
+          },
+          {
+            "value": 39,
+            "label": "climate_bio12"
+          },
+          {
+            "value": 40,
+            "label": "climate_bio15"
+          },
+          {
+            "value": 41,
+            "label": "land_type"
+          },
+          {
+            "value": 42,
+            "label": "terrain_dem"
+          },
+          {
+            "value": 43,
+            "label": "terrain_relief"
+          },
+          {
+            "value": 44,
+            "label": "terrain_slope"
+          },
+          {
+            "value": 45,
+            "label": "terrain_tpi"
+          },
+          {
+            "value": 46,
+            "label": "terrain_patch_r-2_c-2"
+          },
+          {
+            "value": 47,
+            "label": "terrain_patch_r-2_c-1"
+          },
+          {
+            "value": 48,
+            "label": "terrain_patch_r-2_c0"
+          },
+          {
+            "value": 49,
+            "label": "terrain_patch_r-2_c1"
+          },
+          {
+            "value": 50,
+            "label": "terrain_patch_r-2_c2"
+          },
+          {
+            "value": 51,
+            "label": "terrain_patch_r-1_c-2"
+          },
+          {
+            "value": 52,
+            "label": "terrain_patch_r-1_c-1"
+          },
+          {
+            "value": 53,
+            "label": "terrain_patch_r-1_c0"
+          },
+          {
+            "value": 54,
+            "label": "terrain_patch_r-1_c1"
+          },
+          {
+            "value": 55,
+            "label": "terrain_patch_r-1_c2"
+          },
+          {
+            "value": 56,
+            "label": "terrain_patch_r0_c-2"
+          },
+          {
+            "value": 57,
+            "label": "terrain_patch_r0_c-1"
+          },
+          {
+            "value": 58,
+            "label": "terrain_patch_r0_c0"
+          },
+          {
+            "value": 59,
+            "label": "terrain_patch_r0_c1"
+          },
+          {
+            "value": 60,
+            "label": "terrain_patch_r0_c2"
+          },
+          {
+            "value": 61,
+            "label": "terrain_patch_r1_c-2"
+          },
+          {
+            "value": 62,
+            "label": "terrain_patch_r1_c-1"
+          },
+          {
+            "value": 63,
+            "label": "terrain_patch_r1_c0"
+          },
+          {
+            "value": 64,
+            "label": "terrain_patch_r1_c1"
+          },
+          {
+            "value": 65,
+            "label": "terrain_patch_r1_c2"
+          },
+          {
+            "value": 66,
+            "label": "terrain_patch_r2_c-2"
+          },
+          {
+            "value": 67,
+            "label": "terrain_patch_r2_c-1"
+          },
+          {
+            "value": 68,
+            "label": "terrain_patch_r2_c0"
+          },
+          {
+            "value": 69,
+            "label": "terrain_patch_r2_c1"
+          },
+          {
+            "value": 70,
+            "label": "terrain_patch_r2_c2"
+          }
+        ]
+      },
+      "stats": {
+        "min": 2.0,
+        "max": 50.0,
+        "mean": 36.470677640293,
+        "std": 6.4347653110986105,
+        "p05": 19.0,
+        "p50": 40.0,
+        "p95": 43.0,
+        "count": 11978538.0
+      }
+    },
+    {
+      "id": "explain_top1_strength_OC_0-5cm_1km_mean",
+      "label": "explain_top1_strength_OC_0-5cm_1km_mean",
+      "type": "raster",
+      "role": "strength",
+      "path": "rasters/explain_top1_strength_OC_0-5cm_1km_mean.tif",
+      "legend": {
+        "type": "continuous",
+        "palette": [
+          "#f3f4f6",
+          "#cbd5e1",
+          "#64748b",
+          "#1e3a8a"
+        ],
+        "vmin": 0.0,
+        "vmax": 1.089654111862183,
+        "ticks": [
+          0.0,
+          -0.5757710337638855,
+          1.089654111862183
+        ]
+      },
+      "stats": {
+        "min": -2.1729679107666016,
+        "max": 1.9686870574951172,
+        "mean": -0.39647989657065835,
+        "std": 0.630303655153743,
+        "p05": -1.0552709817886352,
+        "p50": -0.5757710337638855,
+        "p95": 1.089654111862183,
+        "count": 11978538.0
+      }
+    }
+  ],
+  "region_layers": [
+    {
+      "target": "TN_0-5cm_1km_mean",
+      "id": "region_evidence_TN_0-5cm_1km_mean",
+      "type": "vector",
+      "path": "region_evidence_TN_0-5cm_1km_mean.geojson",
+      "id_field": "region_id",
+      "target_field": "target",
+      "region_count": 617
+    },
+    {
+      "target": "OC_0-5cm_1km_mean",
+      "id": "region_evidence_OC_0-5cm_1km_mean",
+      "type": "vector",
+      "path": "region_evidence_OC_0-5cm_1km_mean.geojson",
+      "id_field": "region_id",
+      "target_field": "target",
+      "region_count": 293
+    }
+  ],
+  "evidence_lists": [
+    {
+      "target": "TN_0-5cm_1km_mean",
+      "json_path": "evidence_list_TN_0-5cm_1km_mean.json",
+      "csv_path": "evidence_list_TN_0-5cm_1km_mean.csv",
+      "region_count": 617
+    },
+    {
+      "target": "OC_0-5cm_1km_mean",
+      "json_path": "evidence_list_OC_0-5cm_1km_mean.json",
+      "csv_path": "evidence_list_OC_0-5cm_1km_mean.csv",
+      "region_count": 293
+    }
+  ],
+  "summary_stats": {
+    "path": "summary_stats.json",
+    "region_count": 910
+  }
+}
